@@ -1,2 +1,2 @@
 # vr_unity_practice
-Unityの勉強のために課題を行うためのプロダクトです。
+Unityの学習のためのプロダクトです。
