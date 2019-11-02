@@ -1,2 +1,2 @@
 # vr_unity_practice
-Unityの学習のためのプロダクトです。
+Unityの学習のためのリポジトリです。
