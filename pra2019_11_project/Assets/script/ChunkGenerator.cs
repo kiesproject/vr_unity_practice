@@ -18,14 +18,6 @@ public class ChunkGenerator : MonoBehaviour
         CreateStageData();
 
         CreateStage();
-
-        for (int i = 0; i < MapX; i++)
-        {
-            for (int j = 0; j < MapZ; j++)
-            {
-                Debug.Log("[" + i + "," + j + "]" + mapData[i,j]);
-            }
-        }
     }
     
     private void ResetMapData()
