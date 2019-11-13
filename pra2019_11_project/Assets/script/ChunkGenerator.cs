@@ -38,10 +38,46 @@ public class ChunkGenerator : MonoBehaviour
         {
             for (int j = 0; j < MapZ; j++)
             {
-                int selectedChunk = Random.Range(0, Chunks.Length);
+                int selectedChunk;
+
+                if (i == 0 && j == 0)
+                {
+                    selectedChunk = Random.Range(1, Chunks.Length);     //スタートは部屋チャンクから
+                }
+                else
+                {
+                    selectedChunk = Random.Range(0, Chunks.Length);
+                }
+                
                 Debug.Log(selectedChunk);
                 mapData[i, j] = selectedChunk;
             }
+        }
+    }
+    /// <summary>
+    /// 分かれ道を生成
+    /// </summary>
+    /// <param name="x">生成するチャンクのMapX位置</param>
+    /// <param name="z">生成するチャンクのMapZ位置</param>
+    private void CreateJanction(int x, int z)
+    {
+        GameObject wall = Instantiate(Chunks[mapData[x, z]], new Vector3(10 * x, 0, 10 * z), Quaternion.identity);
+        if (x == 0)
+        {
+            wall.GetComponent<WallController>().SetWall(3);
+        }
+        else if (x == (MapX - 1))
+        {
+            wall.GetComponent<WallController>().SetWall(1);
+        }
+
+        if (z == 0)
+        {
+            wall.GetComponent<WallController>().SetWall(2);
+        }
+        else if (z == (MapZ - 1))
+        {
+            wall.GetComponent<WallController>().SetWall(0);
         }
     }
 
@@ -51,7 +87,14 @@ public class ChunkGenerator : MonoBehaviour
         {
             for (int j = 0; j < MapZ; j++)
             {
-                Instantiate(Chunks[mapData[i, j]], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
+                if(mapData[i,j] == 0)
+                {
+                    CreateJanction(i, j);
+                }
+                else
+                {
+                    Instantiate(Chunks[mapData[i, j]], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
+                }
             }
         }
     }
