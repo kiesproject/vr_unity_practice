@@ -61,23 +61,34 @@ public class ChunkGenerator : MonoBehaviour
     /// <param name="z">生成するチャンクのMapZ位置</param>
     private void CreateJanction(int x, int z)
     {
+        int wallCount = 0;
+
         GameObject wall = Instantiate(Chunks[mapData[x, z]], new Vector3(10 * x, 0, 10 * z), Quaternion.identity);
         if (x == 0)
         {
             wall.GetComponent<WallController>().SetWall(3);
+            wallCount++;
         }
         else if (x == (MapX - 1))
         {
             wall.GetComponent<WallController>().SetWall(1);
+            wallCount++;
         }
 
         if (z == 0)
         {
             wall.GetComponent<WallController>().SetWall(2);
+            wallCount++;
         }
         else if (z == (MapZ - 1))
         {
             wall.GetComponent<WallController>().SetWall(0);
+            wallCount++;
+        }
+
+        if (wallCount <= 2)
+        {
+            wall.GetComponent<WallController>().SetWall(Random.Range(0, 4));
         }
     }
 
