@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43688366, g: 0.48453766, b: 0.5647948, a: 1}
+  m_IndirectSpecularColor: {r: 0.44331303, g: 0.4925716, b: 0.5722196, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2178,7 +2178,7 @@ Light:
   serializedVersion: 9
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2234,13 +2234,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078850264}
-  m_LocalRotation: {x: 0.48722258, y: 0.54804516, z: -0.48790166, w: 0.473511}
+  m_LocalRotation: {x: 0.3592197, y: 0.6491951, z: -0.34197557, w: 0.57667994}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 85.00001, y: 150, z: 55.686}
+  m_LocalEulerAnglesHint: {x: 59.129, y: 101.351006, z: 8.065001}
 --- !u!1 &1109740923 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1817638859928780, guid: eed966e4f75f16d4fa2ce1736befb98f,
@@ -2324,6 +2324,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 4388961106462912, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.23
+      objectReference: {fileID: 0}
     - target: {fileID: 4793183225674318, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2393,10 +2397,6 @@ PrefabInstance:
       propertyPath: MoveSpeed
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 4388961106462912, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.23
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
 --- !u!43 &1821533923
@@ -2405,7 +2405,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-79408
+  m_Name: pb_Mesh16646
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2607,8 +2607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Chunks:
   - {fileID: 5588483731762527675, guid: 88574dcc8bd58314186274ab52e7208f, type: 3}
-  - {fileID: 7533006265853998324, guid: bb9ef29e8e852164db32caa97867333b, type: 3}
-  - {fileID: 466916953464605349, guid: b506e0fa6a3804a4d88994d33e60e275, type: 3}
+  - {fileID: 2128572129234461265, guid: 2cfbd7bd42b71e34b9c9ed059af34d0d, type: 3}
   MapX: 6
   MapZ: 4
 --- !u!1 &2068858725
