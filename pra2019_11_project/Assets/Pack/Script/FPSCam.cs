@@ -37,39 +37,28 @@ public class FPSCam : MonoBehaviour {
         if (characterController.isGrounded) {
             if (Move_x != 0)
             {
-
                 MoveVector.x = Move_x * MoveSpeed;
-
             }
             else
             {
-
                 MoveVector.x = 0;
-
             }
 
             if (Move_z != 0)
             {
-
                 MoveVector.z = Move_z * MoveSpeed;
-
             }
             else
             {
-
                 MoveVector.z = 0;
-
             }
 
             if (Input.GetButtonDown("Jump")) {
                 MoveVector.y = JumpSpeed;
             }
-
         }
 
+        characterController.Move(transform.TransformDirection(MoveVector * Time.deltaTime));
         MoveVector.y -= Gravity * Time.deltaTime;
-
-        characterController.Move( transform.TransformDirection(MoveVector * Time.deltaTime) );
-
     }
 }
