@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 623728165}
   - component: {fileID: 623728164}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Labyrinth_Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f74ed180b23e114d91c3aa6c506efd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockPrefabs: []
+  sizeBlock: {x: 1, y: 1, z: 0}
 --- !u!4 &623728165
 Transform:
   m_ObjectHideFlags: 0
