@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class ChunkGenerator : MonoBehaviour
 {
+    public struct ChunkData
+    {
+        public int ChunkIndex;
+        public bool front, back, left, right;
+    }
+
     [SerializeField] GameObject[] Chunks;
 
-    public int[,] mapData;
-
     [SerializeField] int MapX = 3, MapZ = 3;
-    
+
+    public ChunkData[,] mapData;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,12 +28,12 @@ public class ChunkGenerator : MonoBehaviour
     
     private void ResetMapData()
     {
-        mapData = new int[MapX, MapZ];
+        mapData = new ChunkData[MapX, MapZ];
         for(int i = 0; i < MapX; i++)
         {
             for(int j = 0; j < MapZ; j++)
             {
-                mapData[i, j] = 0;
+                mapData[i, j].ChunkIndex = 0;
             }
         }
     }
@@ -50,7 +56,7 @@ public class ChunkGenerator : MonoBehaviour
                 }
                 
                 Debug.Log(selectedChunk);
-                mapData[i, j] = selectedChunk;
+                mapData[i, j].ChunkIndex = selectedChunk;
             }
         }
     }
@@ -64,7 +70,7 @@ public class ChunkGenerator : MonoBehaviour
     {
         int count = 0;
 
-        GameObject wall = Instantiate(Chunks[mapData[x, z]], new Vector3(10 * x, 0, 10 * z), Quaternion.identity);
+        GameObject wall = Instantiate(Chunks[mapData[x, z].ChunkIndex], new Vector3(10 * x, 0, 10 * z), Quaternion.identity);
         if (x == 0)
         {
             count = wall.GetComponent<WallController>().SetWall(3);
@@ -95,13 +101,13 @@ public class ChunkGenerator : MonoBehaviour
         {
             for (int j = 0; j < MapZ; j++)
             {
-                if(mapData[i,j] == 0)
+                if(mapData[i,j].ChunkIndex == 0)
                 {
                     CreateJanction(i, j);
                 }
                 else
                 {
-                    Instantiate(Chunks[mapData[i, j]], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
+                    Instantiate(Chunks[mapData[i, j].ChunkIndex], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
                 }
             }
         }
