@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-sealed public class Rect
+public class Rect
 {
     public List<Rect> rects = new List<Rect>();
     public Rect parent;
@@ -163,8 +163,11 @@ sealed public class Rect
             {
                 if (r.Check_pointRect(x, y))
                 {
-                    rect = r;
-                    isBreak = true;
+                    if (r.GetType() == typeof(Rect))
+                    {
+                        rect = r;
+                        isBreak = true;
+                    }
                 }
             }
 
@@ -203,9 +206,7 @@ sealed public class Rect
         int j = 0; //安全用
         while (!isEnd)
         {
-            if (j++ > 1000) break; //安全用
-
-            Debug.Log(target);
+            if (j++ > 1000) { Debug.LogError("[Rect.Get_AdjaRect]ループ数が1000を達したため強制終了しました。");  break; }//安全用
 
             //ターゲットの地点が範囲外なら次に進む
             if (!origin.Check_pointRect(target.x + dir[index % 4].x, target.y + dir[index % 4].y))
@@ -221,7 +222,6 @@ sealed public class Rect
             if (!list.Contains(rect))
             {
                 list.Add(rect);
-                Rect.Test_Rect(rect);
             }
 
             next();
@@ -263,13 +263,6 @@ sealed public class Rect
     public bool Check_RectScale_Slit(int scale)
     {
         return (scale * 2 < this.scale);
-    }
-
-
-
-    public static void Test_Rect(Rect rect)
-    {
-        Debug.Log(string.Format("[Test] x: {0} y: {1} width: {2} height: {3}", rect.x, rect.y, rect.width, rect.height));
     }
 
     public string Test_RS()
