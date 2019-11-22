@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+    string filePath;
+    SaveData save;
+
     public Text GameScore;
+    public Text HScore;
 
     [HideInInspector]
     public int score = 0;
+    private int Hscore = 0; //ハイスコア
 
     private int number = 0;
     private float time = 0.0f;
@@ -28,6 +34,12 @@ public class GameManager : MonoBehaviour
         //マウスカーソルが見えなくなるが、Escキーで出現する
         Cursor.lockState = CursorLockMode.Locked;
 
+        filePath = Application.dataPath + "/" + ".savedata.json";
+        save = new SaveData();
+
+        Load();
+        Hscore = save.Hscore_S;
+        HScore.text = Hscore.ToString();
         //スコアの初期化
         GameScore.text = "0";
     }
@@ -37,6 +49,13 @@ public class GameManager : MonoBehaviour
     {
         //スコアの代入
         GameScore.text = score.ToString();
+
+        if(score > Hscore)
+        {
+            save.Hscore_S = score;
+            Save();
+            HScore.text = save.Hscore_S.ToString();
+        }
 
         time += Time.deltaTime;
 
@@ -53,5 +72,35 @@ public class GameManager : MonoBehaviour
             time = 0.0f;
         }
 
+    }
+
+    [System.Serializable]
+    public class SaveData
+    {
+        public int Hscore_S = 0;
+    }
+
+
+        public void Save()
+    {
+        string json = JsonUtility.ToJson(save);
+
+        StreamWriter streamWriter = new StreamWriter(filePath);
+        streamWriter.Write(json);
+        streamWriter.Flush();
+        streamWriter.Close();
+    }
+
+    public void Load()
+    {
+        if (File.Exists(filePath))
+        {
+            StreamReader streamReader;
+            streamReader = new StreamReader(filePath);
+            string data = streamReader.ReadToEnd();
+            streamReader.Close();
+
+            save = JsonUtility.FromJson<SaveData>(data);
+        }
     }
 }
