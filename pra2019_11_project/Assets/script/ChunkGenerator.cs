@@ -8,6 +8,14 @@ public class ChunkGenerator : MonoBehaviour
     {
         public int ChunkIndex;
         public bool[] CanMove;
+
+        public void ResetMoveData()
+        {
+            for (int k = 0; k < CanMove.Length; k++)
+            {
+                CanMove[k] = true;
+            }
+        }
     }
 
     [SerializeField] GameObject[] Chunks;
@@ -35,11 +43,7 @@ public class ChunkGenerator : MonoBehaviour
             {
                 mapData[i, j].ChunkIndex = 0;
                 mapData[i, j].CanMove = new bool[4];
-
-                for(int k = 0; k < mapData[i,j].CanMove.Length; k++)
-                {
-                    mapData[i, j].CanMove[k] = true;
-                }
+                mapData[i, j].ResetMoveData();
             }
         }
     }
