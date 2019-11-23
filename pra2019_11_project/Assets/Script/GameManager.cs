@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public Text GameScore;
     public Text HScore;
 
+    public GameObject GameOver_A;
+
     [HideInInspector]
     public int score = 0;
     private int Hscore = 0; //ハイスコア
@@ -59,8 +61,8 @@ public class GameManager : MonoBehaviour
 
         time += Time.deltaTime;
 
-        //敵のランダム出現
-        if(time > appearTime)
+            //敵のランダム出現
+            if (time > appearTime)
         {
             x = Random.Range(-9.0f, 9.0f);
             y = Random.Range(1.0f, 2.0f);
@@ -81,7 +83,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-        public void Save()
+    public void Save()
     {
         string json = JsonUtility.ToJson(save);
 

@@ -951,7 +951,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Push "Esc" Key
+  m_Text: Please wait 5 second...
 --- !u!222 &1000308117
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1944,6 +1944,11 @@ PrefabInstance:
       propertyPath: HScore
       value: 
       objectReference: {fileID: 1335727621}
+    - target: {fileID: 2661752880400529402, guid: ea16e9d2ef249e549ab52019fd336295,
+        type: 3}
+      propertyPath: GameOver_A
+      value: 
+      objectReference: {fileID: 2101505792}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea16e9d2ef249e549ab52019fd336295, type: 3}
 --- !u!1001 &3225717372307746405
