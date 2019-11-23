@@ -81,7 +81,7 @@ public class ChunkGeneratorV2 : MonoBehaviour
             for (int j = 0; j < MapZ; j++)
             {
                 GameObject obj = Instantiate(Chunks[mapData[i, j].ChunkIndex], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
-                obj.GetComponent<GroupChecker>().CheckGroups(mapData[i, j].GroupIndex);
+                obj.GetComponent<GroupChecker>().group = mapData[i, j].GroupIndex;
             }
         }
     }

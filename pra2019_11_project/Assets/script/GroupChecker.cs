@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GroupChecker : MonoBehaviour
 {
-    [SerializeField] int group;
+    public int group;
 
     // Start is called before the first frame update
     void Start()
