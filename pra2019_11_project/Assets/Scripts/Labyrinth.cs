@@ -7,59 +7,47 @@ public class Labyrinth : MonoBehaviour
     [SerializeField]
     private GameObject[] blockPrefabs;
 
+    [SerializeField]
+    private GameObject[] floorPrefabs;
+
     [SerializeField, Tooltip("ブロックのサイズ")]
-    private Vector3 sizeBlock = new Vector3(1, 1, 1);
+    public Vector3 sizeBlock = new Vector3(1, 1, 1);
 
 
     //--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     //===ダンジョン===
-    private int horizontal_size = 0;                    //ダンジョンのサイズ
-    private int vertical_size = 0;                      //ダンジョンのサイズ
-    private Vector3 baseposs_DG = Vector3.zero;         //ダンジョンの中心座標
+    public int horizontal_size = 0;                    //ダンジョンのサイズ
+    public int vertical_size = 0;                      //ダンジョンのサイズ
+    public Vector3 baseposs_DG = Vector3.zero;         //ダンジョンの中心座標
 
-    //===矩形===
-    private int time_Ganaration_Rect = 10;
-    private int x_Size_MinRect = 20;
-    private int y_Size_MinRect = 20;
 
     //タイルマップ
     private List<RoomData> listRooms = new List<RoomData>();
-
     private TileData[] tileDate;        //タイルデータ
 
     //---
     private Rect originRect;            //根の矩形データ
+    private bool isCreated = false;
 
-    private void Start()
+    /// <summary>
+    /// 部屋データを取得する
+    /// </summary>
+    /// <returns></returns>
+    public List<RoomData> Get_RoomDatas()
     {
-        //タイルデータを作成
-        //Create_TileData(100, 100);
-
-
-        /*
-        Rect rect = new Rect(0, 0, 10, 10);
-        rect.Create_ChildRect(1);
-        rect.rects[0].Create_ChildRect(0);
-        rect.rects[1].Create_ChildRect(0);
-        Test_RectTree(rect, 0);
-
-
-        var v = Rect.Check_pointUpRect(5, 0, rect);
-        Rect.Test_Rect(v);
-
-        Debug.Log("--- --- --- --- --- --- --- ---");
-        foreach(Rect r in v.Get_AdjaRect(rect))
-        {
-            Rect.Test_Rect(r);
-        }
-        */
-
-        Create_Labyrinth();
-
-        Test_TileMap();
-        //Test_RectTree(originRect,0);
+        return listRooms;
     }
+
+    /// <summary>
+    /// 作成されたデータがあるのかどうか
+    /// </summary>
+    /// <returns></returns>
+    public bool isCreatedData()
+    {
+        return (tileDate != null) || isCreated;
+    }
+
 
     //  ◇========================================================================◇
     //   ||〇　〇　タ　イ　ル　デ　ー　タ　操　作　系　の　メ　ソ　ッ　ド　〇　〇 ||
@@ -133,7 +121,7 @@ public class Labyrinth : MonoBehaviour
     /// </summary>
     /// <param name="index"></param>
     /// <returns></returns>
-    private TileData Get_TileData(int index)
+    public TileData Get_TileData(int index)
     {
         if (tileDate.Length != 0)
         {
@@ -142,9 +130,9 @@ public class Labyrinth : MonoBehaviour
                 return tileDate[index];
             }
         }
-        Debug.Log("index: "+index);
+        Debug.Log(string.Format("index[ x: {0} y: {1} ] {2}", index % vertical_size, index/vertical_size, index));
         Debug.LogError("[Labyrinyh] タイルデータの取得に失敗 : タイルデータが存在しない or 指定されたindexが不適切");
-        return null;
+        return new TileData {TileID = -1};
     }
 
     /// <summary>
@@ -153,7 +141,7 @@ public class Labyrinth : MonoBehaviour
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    private TileData Get_TileData(int x, int y)
+    public TileData Get_TileData(int x, int y)
     {
         return Get_TileData(Get_TileIndex(x, y));
     }
@@ -182,15 +170,15 @@ public class Labyrinth : MonoBehaviour
             var dx = Random.Range(x_min, x_max);
             var dy = Random.Range(y_min, y_max);
 
-            var x = Random.Range(0, rectBase.width - dx);
-            var y = Random.Range(0, rectBase.height - dy);
+            var x = Random.Range(1, rectBase.width - dx + 1) + rectBase.x;
+            var y = Random.Range(1, rectBase.height - dy + 1) + rectBase.y;
 
             var rd = new RoomData(rectBase, x, y, dx, dy);
             rd.Set_RoundRect(originRect);
 
             listRooms.Add(rd);
-            Fill_TileData(x + rectBase.x, y + rectBase.y, dx, dy, 1);
-            Fill_TileData(x + rectBase.x + 1, y + rectBase.y + 1, dx - 2, dy - 2, 2);
+            Fill_TileData(x , y , dx, dy, 1);
+            Fill_TileData(x + 1, y + 1, dx - 2, dy - 2, 2);
             return true;
         }
 
@@ -274,7 +262,35 @@ public class Labyrinth : MonoBehaviour
 
     private void Put_TileTrace()
     {
-
+        for (int j = 0; j < vertical_size - 1; j++)
+        {
+            for (int i = 0; i < horizontal_size - 1; i++)
+            {
+                var id = Get_TileData(i, j).TileID;
+                switch (id)
+                {
+                    case 0:
+                    case 1:
+                        {
+                            var o = Instantiate(blockPrefabs[0], new Vector3(i, 0, j), blockPrefabs[0].transform.rotation);
+                            GameManager.instance.Move_ObjectToScene(o);
+                        }
+                        break;
+                    case 2:
+                    case 3:
+                    case 4:
+                        {
+                            var o = Instantiate(floorPrefabs[0], new Vector3(i, -0.5f, j), floorPrefabs[0].transform.rotation);
+                            GameManager.instance.Move_ObjectToScene(o);
+                        }
+                        break;
+                    default:
+                        break;
+                           
+                }
+                
+            }
+        }
     }
 
 
@@ -282,55 +298,47 @@ public class Labyrinth : MonoBehaviour
     //   ||☆　☆　迷　宮　に　関　す　る　メ　ソ　ッ　ド　☆　☆ ||
     //  ◇=========================================================◇
 
+    public void Create_Labyrinth()
+    {
+        Create_Labyrinth(new Labyrinth_Config());
+    }
+
     /// <summary>
     /// 迷宮の生成
     /// </summary>
-    void Create_Labyrinth()
+    public void Create_Labyrinth(Labyrinth_Config config)
     {
-        int time_gene = 10;
-        int x_size_laby = 50;
-        int y_size_laby = 50;
-        int x_size_minRect = 10;
-        int y_size_minRect = 10;
-
-        int roomSkip = 0;
+        isCreated = true;
+        int time_gene = config.time_gene;
+        int x_size_laby = config.x_size_laby;
+        int y_size_laby = config.y_size_laby;
+        int x_size_minRect = config.x_size_minRect;
+        int y_size_minRect = config.y_size_minRect;
         int x_max_room = x_size_minRect;
         int y_max_room = y_size_minRect;
-        int x_min_room = 5;
-        int y_min_room = 5;
-
-        int route_addRate = 100;
+        int x_min_room = config.x_min_room;
+        int y_min_room = config.y_min_room;
+        int route_addRate = config.route_addRate;
 
         //タイルデータを生成・初期化
         Create_TileData(x_size_laby, y_size_laby);
         //矩形を自動生成
         Create_rect_Labyrinth_f(time_gene, x_size_laby, y_size_laby, x_size_minRect, y_size_minRect);
-        Test_RectTree(originRect, 0);
 
         var list_rect_top = Get_TopRect(originRect);
-
         foreach(Rect r in list_rect_top)
         {
-            if(!(1 + Random.Range(0, 100) <= roomSkip))
-            {
-                //部屋を生成する
-                Create_Room(x_max_room, y_max_room, x_min_room, y_min_room, r);
-            }
+            //部屋を生成する
+            Create_Room(x_max_room, y_max_room, x_min_room, y_min_room, r);
         }
 
         var routeData = new Dictionary<RoomData ,List<RoomData>>(); //ルートデータ(要素数: 部屋番号 , 値: 接続する部屋番号s)
-        SettingRoute(route_addRate, ref routeData);
+        SettingRoute(route_addRate, ref routeData); //どの部屋と繋げるのか設定する
+        FixRoutingList(ref routeData); //ルート関係情報を修正する
+        Create_Route(routeData); //通路作成
+        Put_TileTrace(); //タイルマップを元にブロックを配置
 
-        //Test_Show_RoutingList(routeData);
-
-        FixRoutingList(ref routeData);
-
-        Test_Show_RoutingList(routeData);
-        //---- ---- ---- ---- ---- ---- ---- ---- ---- ----- ---- ---- ----
-
-        
-        //Debug.Log(tileDate[0].TileID);
-
+        Test_TileMap();
     }
 
     /// <summary>
@@ -352,9 +360,8 @@ public class Labyrinth : MonoBehaviour
 
         for (int i=0; i<gene; i++)
         {
-            Debug.Log(string.Format("生成: {0}\nスケール: {1}  width: {2} height: {3}", i, rect.scale, rect.width, rect.height));
-            int q = 0;
-            int length = -1;
+            //Debug.Log(string.Format("生成: {0}\nスケール: {1}  width: {2} height: {3}", i, rect.scale, rect.width, rect.height));
+            int length;
             int d = Random.Range(0, 2);
 
             //分割作成が可能かどうかの判定
@@ -387,17 +394,6 @@ public class Labyrinth : MonoBehaviour
             {
                 length = Random.Range(minY, rect.height - minY);
             }
-
-            //テスト
-            /*
-            Rect testRect = new Rect(rect.x, rect.y, rect.width, rect.height);
-            testRect.Create_ChildRect(length, d);
-            foreach(Rect r in testRect.rects)
-            {
-                if (r.width < minX) Debug.LogError("\tXの最小値を下回っています");
-                if (r.height < minY) Debug.LogError("\tYの最小値を下回っています");
-            }
-            */
 
             //生成したRectをリストに登録　→　次のRectを決定
             if (rectList.Count != 0)
@@ -436,7 +432,7 @@ public class Labyrinth : MonoBehaviour
 
         for (int i = 0; i < gene; i++)
         {
-            Debug.Log(string.Format("生成: {0}\nスケール: {1}  width: {2} height: {3}", i, rect.scale, rect.width, rect.height));
+            //Debug.Log(string.Format("生成: {0}\nスケール: {1}  width: {2} height: {3}", i, rect.scale, rect.width, rect.height));
             int d = Random.Range(0, 2);
 
             //分割作成が可能かどうかの判定
@@ -452,24 +448,13 @@ public class Labyrinth : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("\t作成不可");
+                    //Debug.Log("\t作成不可");
                     rectList.Remove(rect);
                     if (rectList.Count == 0) continue;
                     rect = rectList[Random.Range(0, rectList.Count)];
                     continue;
                 }
             }
-
-            //テスト
-            /*
-            Rect testRect = new Rect(rect.x, rect.y, rect.width, rect.height);
-            testRect.Create_ChildRect(length, d);
-            foreach(Rect r in testRect.rects)
-            {
-                if (r.width < minX) Debug.LogError("\tXの最小値を下回っています");
-                if (r.height < minY) Debug.LogError("\tYの最小値を下回っています");
-            }
-            */
 
             //生成したRectをリストに登録　→　次のRectを決定
             if (rectList.Count != 0)
@@ -497,7 +482,7 @@ public class Labyrinth : MonoBehaviour
     private void SettingRoute(int originAddRate, ref Dictionary<RoomData, List<RoomData>> dict)
     {
         int addRate = 0;
-        Debug.Log("[Labyrinth.SettingRoute()] ルートの設定を行う");
+        //Debug.Log("[Labyrinth.SettingRoute()] ルートの設定を行う");
         foreach(RoomData room in listRooms)
         {
             addRate = 0;
@@ -570,7 +555,7 @@ public class Labyrinth : MonoBehaviour
             {
                 s += room.label;
             }
-            Debug.Log(string.Format("room: {0} -> {1}", item.Key.label, s));
+            //Debug.Log(string.Format("room: {0} -> {1}", item.Key.label, s));
         }
     }
 
@@ -598,39 +583,29 @@ public class Labyrinth : MonoBehaviour
             label++;
         }
 
-        foreach (var item in table)
-        {
-            //Debug.Log(string.Format("room: {0} label: {1}", item.Key.label, item.Value));
-        }
-
         int q=0;
         var rooms = new List<RoomData>(table.Keys);
         while (labels.Count != 1)
         {
-            Debug.Log("countの数: " + labels.Count);
             if (q++ == 40) { Debug.LogError("異常な回数の繰り返しがありました"); break; }
 
-            Debug.Log("rooms.Count: " + rooms.Count);
             var room = rooms[Random.Range(0, rooms.Count)];
             var culletLabel = table[room];
             RoomData rRoom;
             rooms.Remove(room);
 
             bool isEnd = false;
-
-            Debug.Log("入ってない？: " + room.roundRects.Count) ;
             foreach(var rRect in room.roundRects)
             {
                 
                 if (!isEnd)
                 {
+                    if (rRect.rects.Count == 0) continue;
                     if (rRect.rects[0].GetType() == typeof(RoomData))
                     {
-                        Debug.Log("型が同じ");
                         rRoom = (RoomData)rRect.rects[0];
                         if (table[rRoom] != culletLabel /*&& labels.Contains(table[rRoom])*/)
                         {
-                            Debug.Log("");
                             room.routeRoom.Add(rRoom);
                             rRoom.routeRoom.Add(room);
                             dict[room].Add(rRoom);
@@ -644,13 +619,6 @@ public class Labyrinth : MonoBehaviour
                     }
                 }
             }
-
-            
-        }
-
-        foreach(var item in table)
-        {
-            Debug.Log(string.Format("room: {0} label: {1}", item.Key.label, item.Value));
         }
         
         return;
@@ -664,8 +632,6 @@ public class Labyrinth : MonoBehaviour
 
                 //リストに登録
                 if (!labels.Contains(setLabel)) labels.Add(setLabel);
-
-                //Debug.Log(string.Format("room: {0} label: {1}", room.label, setLabel));
 
                 foreach (var a in room.routeRoom)
                 {
@@ -682,9 +648,7 @@ public class Labyrinth : MonoBehaviour
                 foreach (var a in room.routeRoom)
                     JoinRoute(a, goLabel, setLabel);
             }
-
         }
-
     }
 
     private void Create_Route(Dictionary<RoomData, List<RoomData>> dict)
@@ -698,80 +662,105 @@ public class Labyrinth : MonoBehaviour
             new Vector3Int(0, -1, 0)} ;
 
         var rooms = new List<RoomData>(dict.Keys);
+
         foreach(var room in rooms)
         {
             foreach(var routeRoom in room.routeRoom)
             {
-                //通路伸ばし
-                int dirID = Get_Dir(room, routeRoom);
-                Vector3Int dirV3 = dir[dirID];
-                Vector3Int point1 = RandamPoint(room, dirID);
-                //ExtendRoute(dirID, point1, )
-            }
+                if (routingTable[room].Contains(routeRoom) && routingTable[routeRoom].Contains(room))
+                {
+                    
+                    //通路伸ばし
+                    int dirID_1 = Get_Dir(room, routeRoom);
+                    
+                    Vector3Int dirV3_1 = dir[dirID_1];
+                    Vector3Int startPoint1 = RandamPoint(room, dirID_1);
+                    Vector3Int endPoint1 = ExtendRoutePoint(dirID_1, startPoint1, room, routeRoom);
 
+                    Fillp_TileData(startPoint1.x, startPoint1.y, endPoint1.x, endPoint1.y, 4);
+                    Set_TileData(startPoint1.x, startPoint1.y, 3);
+                    routingTable[room].Remove(routeRoom);
+
+
+                    //二回目の通路
+                    int dirID_2 = Get_Dir(routeRoom, room);
+                    
+                    Vector3Int dirV3_2 = dir[dirID_2];
+                    Vector3Int startPoint2 = RandamPoint(routeRoom, dirID_2);
+                    Vector3Int endPoint2 = ExtendRoutePoint(dirID_2, startPoint2, routeRoom, room);
+
+                    Fillp_TileData(startPoint2.x, startPoint2.y, endPoint2.x, endPoint2.y, 4);
+                    Set_TileData(startPoint2.x, startPoint2.y, 3);
+                    routingTable[routeRoom].Remove(room);
+
+                    //繋げる通路
+                    Fillp_TileData(endPoint1.x, endPoint1.y, endPoint2.x, endPoint2.y, 4);
+                }
+            }
         }
 
         return;
 
-        void ExtendRoute(int dirID, Vector3Int start, RoomData targetRoom)
+        Vector3Int ExtendRoutePoint(int dirID, Vector3Int start, RoomData room, RoomData targetRoom)
         {
+            //→↓←↑
+            Vector3Int outV3 = new Vector3Int(-1, -1, 0);
+
             switch (dirID)
             {
                 case 0:
                     {
-                        Fill_TileData(start.x, start.y, targetRoom.parent.x - start.x + 1, 1, 4);
-                        Set_TileData(start.x, start.y, 3);
+                        outV3 = new Vector3Int(targetRoom.parent.x, start.y, 0);
                     }
                     break;
                 case 1:
                     {
-                        Fill_TileData(start.x, targetRoom.parent.y, 1, start.y - targetRoom.parent.y , 4);
-                        Set_TileData(start.x, start.y, 3);
+                        outV3 = new Vector3Int(start.x, targetRoom.parent.y, 0);
                     }
                     break;
                 case 2:
                     {
-                        Fill_TileData(targetRoom.parent.x, start.y, start.x - targetRoom.parent.x, 1, 4);
-                        Set_TileData(start.x, start.y, 3);
+                        outV3 = new Vector3Int(room.parent.x , start.y, 0);
                     }
                     break;
                 case 3:
                     {
-                        Fill_TileData(start.x, start.y, 1, start.y - targetRoom.parent.y + 1, 4);
-                        Set_TileData(start.x, start.y, 3);
+                        outV3 = new Vector3Int(start.x, room.parent.y , 0);
                     }
                     break;
                 default:
                     break;
             }
 
+            return outV3;
         }
 
         Vector3Int RandamPoint(RoomData room, int direction)
         {
             Vector3Int outV3 = Vector3Int.zero;
+            //return new Vector3Int(room.x, room.y, 0);
 
             switch (direction)
             {
                 case 0:
                     {
-                        var len = Random.Range(1, room.height - 1);
-                        int x = room.x + room.width - 1;
+                        var len = Random.Range(1, room.height - 2);
+                        int x = room.x + room.width - 2;
                         int y = room.y + len;
                         outV3 = new Vector3Int(x, y, 0);
                         break;
                     }
                 case 1:
                     {
-                        var len = Random.Range(1, room.width - 1);
+                        var len = Random.Range(1, room.width - 2);
                         int x = room.x + len;
-                        int y = room.y;
+                        int y = room.y + room.height - 2;
                         outV3 = new Vector3Int(x, y, 0);
                         break;
                     }
                 case 2:
                     {
-                        var len = Random.Range(1, room.height - 1);
+                        var len = Random.Range(1, room.height - 2);
                         int x = room.x;
                         int y = room.y + len;
                         outV3 = new Vector3Int(x, y, 0);
@@ -779,9 +768,9 @@ public class Labyrinth : MonoBehaviour
                     }
                 case 3:
                     {
-                        int len = Random.Range(1, room.width - 1);
+                        int len = Random.Range(1, room.width - 2);
                         int x = room.x + len;
-                        int y = room.y + room.height - 1;
+                        int y = room.y;
                         outV3 = new Vector3Int(x, y, 0);
                         break;
                     }
@@ -797,6 +786,9 @@ public class Labyrinth : MonoBehaviour
     {
         int dx = next.parent.x - origin.parent.x;
         int dy = next.parent.y - origin.parent.y;
+
+        //int dx = next.x - origin.x;
+        //int dy = next.y - origin.y;
 
         if (Mathf.Abs(dx) >= Mathf.Abs(dy))
         {
@@ -944,4 +936,19 @@ public class RoomData : Rect
     {
         roundRects = parent.Get_AdjaRect(rootR);
     }
+}
+
+public class Labyrinth_Config
+{
+    public int time_gene = 30;
+    public int x_size_laby = 50;
+    public int y_size_laby = 50;
+    public int x_size_minRect = 9;
+    public int y_size_minRect = 9;
+
+    public int x_min_room = 6;
+    public int y_min_room = 6;
+
+    public int route_addRate = 70;
+
 }
