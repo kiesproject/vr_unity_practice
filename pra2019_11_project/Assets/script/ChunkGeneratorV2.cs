@@ -9,8 +9,6 @@ public class ChunkGeneratorV2 : MonoBehaviour
         public int ChunkIndex;
         public bool[] CanMove;
 
-        public int GroupIndex;
-
         public void ResetMoveData()
         {
             for (int k = 0; k < CanMove.Length; k++)
@@ -44,7 +42,7 @@ public class ChunkGeneratorV2 : MonoBehaviour
             for (int j = 0; j < MapZ; j++)
             {
                 mapData[i, j].ChunkIndex = 0;
-                mapData[i, j].GroupIndex = 0;
+
                 mapData[i, j].CanMove = new bool[4];
                 mapData[i, j].ResetMoveData();
             }
@@ -53,25 +51,7 @@ public class ChunkGeneratorV2 : MonoBehaviour
 
     private void CreateStageData()
     {
-        for (int i = 0; i < MapX; i++)
-        {
-            for (int j = 0; j < MapZ; j++)
-            {
-                int selectedChunk;
-
-                if (i == 0 && j == 0)
-                {
-                    selectedChunk = Random.Range(1, Chunks.Length);     //スタートは部屋チャンクから
-                }
-                else
-                {
-                    selectedChunk = Random.Range(0, Chunks.Length);
-                }
-
-                Debug.Log(selectedChunk);
-                mapData[i, j].ChunkIndex = selectedChunk;
-            }
-        }
+        
     }
 
     private void CreateStage()
@@ -80,8 +60,7 @@ public class ChunkGeneratorV2 : MonoBehaviour
         {
             for (int j = 0; j < MapZ; j++)
             {
-                GameObject obj = Instantiate(Chunks[mapData[i, j].ChunkIndex], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
-                obj.GetComponent<GroupChecker>().group = mapData[i, j].GroupIndex;
+                Instantiate(Chunks[mapData[i, j].ChunkIndex], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
             }
         }
     }
