@@ -76,8 +76,23 @@ public class ChunkGeneratorV2 : MonoBehaviour
     private void Dig(int x, int z)
     {
         Random rand = new Random();
+        while (true)
+        {
+            List<Vector2Int> directions = new List<Vector2Int>();
 
+            if (mapData[x, z - 1].ChunkIndex == 0 && mapData[x, z - 2].ChunkIndex == 0)
+                directions.Add(Vector2Int.down);
 
+            if (mapData[x + 1, z].ChunkIndex == 0 && mapData[x + 2, z].ChunkIndex == 0)
+                directions.Add(Vector2Int.right);
+
+            if (mapData[x, z + 1].ChunkIndex == 0 && mapData[x, z + 2].ChunkIndex == 0)
+                directions.Add(Vector2Int.up);
+
+            if (mapData[x - 1, z].ChunkIndex == 0 && mapData[x -2, z].ChunkIndex == 0)
+                directions.Add(Vector2Int.left);
+
+        }
     }
 
     private void CreateStage()
