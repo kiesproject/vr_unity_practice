@@ -17,6 +17,16 @@ public class ChunkGeneratorV2 : MonoBehaviour
             }
         }
     }
+    
+    private enum Dirction
+    {
+        Up = 0,
+        Right = 1,
+        Down = 2,
+        Left = 3
+    }
+
+    private List<Vector2Int> StartCells;
 
     [SerializeField] GameObject[] Chunks;
 
@@ -39,6 +49,7 @@ public class ChunkGeneratorV2 : MonoBehaviour
     private void ResetMapData()
     {
         mapData = new ChunkData[MapX, MapZ];
+        StartCells = new List<Vector2Int>();
         for (int i = 0; i < MapX; i++)
         {
             for (int j = 0; j < MapZ; j++)
@@ -71,28 +82,92 @@ public class ChunkGeneratorV2 : MonoBehaviour
 
         Dig(1, 1);
 
+        for (int i = 0; i < MapX; i++)
+        {
+            for (int j = 0; j < MapZ; j++)
+            {
+                if (i == 0 || j == 0 || i == MapX - 1 || j == MapZ - 1)
+                {
+                    mapData[i, j].ChunkIndex = 0;
+                }
+            }
+        }
     }
 
     private void Dig(int x, int z)
     {
-        Random rand = new Random();
         while (true)
         {
-            List<Vector2Int> directions = new List<Vector2Int>();
+            List<Dirction> directions = new List<Dirction>();
 
             if (mapData[x, z - 1].ChunkIndex == 0 && mapData[x, z - 2].ChunkIndex == 0)
-                directions.Add(Vector2Int.down);
+                directions.Add(Dirction.Down);
 
             if (mapData[x + 1, z].ChunkIndex == 0 && mapData[x + 2, z].ChunkIndex == 0)
-                directions.Add(Vector2Int.right);
+                directions.Add(Dirction.Right);
 
             if (mapData[x, z + 1].ChunkIndex == 0 && mapData[x, z + 2].ChunkIndex == 0)
-                directions.Add(Vector2Int.up);
+                directions.Add(Dirction.Up);
 
             if (mapData[x - 1, z].ChunkIndex == 0 && mapData[x -2, z].ChunkIndex == 0)
-                directions.Add(Vector2Int.left);
+                directions.Add(Dirction.Left);
 
+            if (directions.Count == 0) break;
+
+            SetPath(x, z);
+
+            int dirIndex = Random.Range(0, directions.Count);
+
+            switch (directions[dirIndex])
+            {
+                case Dirction.Down:
+                    SetPath(x, --z);
+                    SetPath(x, --z);
+                    break;
+
+                case Dirction.Right:
+                    SetPath(++x, z);
+                    SetPath(++x, z);
+                    break;
+
+                case Dirction.Up:
+                    SetPath(x, ++z);
+                    SetPath(x, ++z);
+                    break;
+
+                case Dirction.Left:
+                    SetPath(--x, z);
+                    SetPath(--x, z);
+                    break;
+            }
         }
+
+        Vector2Int pathCell = GetStartCell();
+        if(pathCell.x != -1 && pathCell.y != -1)
+        {
+            Dig(pathCell.x,pathCell.y);
+        }
+    }
+
+    private void SetPath(int x, int z)
+    {
+        mapData[x, z].ChunkIndex = 1;
+        if(x % 2 == 1 && z % 2 == 1)
+        {
+            StartCells.Add(new Vector2Int(x, z));
+        }
+    }
+
+    private Vector2Int GetStartCell()
+    {
+        if (StartCells.Count == 0) return new Vector2Int(-1,-1);
+
+        int index = Random.Range(0, StartCells.Count);
+
+        Vector2Int cell = StartCells[index];
+        StartCells.RemoveAt(index);
+
+        return cell;
     }
 
     private void CreateStage()
