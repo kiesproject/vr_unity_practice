@@ -6,12 +6,24 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public State state = State.TITLE;
+    public State state = State.TITLE; //ゲームの状態
+    public StageType stageType = StageType.FLAT; //迷路の種類
+    public LayerMask BlockLayer; //ブロックのレイヤーマスク
+    private int keyState = 0; //鍵の所持数
+
+    // --- --- --- --- --- --- --- --- --- --- ---
     public Labyrinth labyrinth;
     public Player player;
-
     private const string stageName = "Stage";
     private Scene stageScene;
+
+
+
+
+    public enum StageType
+    {
+        FLAT, LABYRINTH, MERO
+    }
 
     public enum State
     {
@@ -37,7 +49,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (labyrinth != null)
+        if (labyrinth != null && stageType == StageType.LABYRINTH)
         {
             labyrinth.Create_Labyrinth();
             Move_FirstPoss();
@@ -95,6 +107,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 最初の位置を決定・設置
+    /// </summary>
     public void Move_FirstPoss()
     {
         if (labyrinth == null) { Debug.LogError("labyrinthが登録されていません"); return; }
@@ -112,5 +127,25 @@ public class GameManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void Add_Key(int value)
+    {
+        keyState += value;
+    }
+
+    public int Get_KeyState()
+    {
+        return keyState;
+    }
+
+    public void Clear_KeyState()
+    {
+        keyState = 0;
+    }
+
+    static public bool CompareLayer(LayerMask layerMask, int layer)
+    {
+        return ((1 << layer) & layerMask) != 0;
     }
 }

@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Bullet_Player
+  - Enemy
+  - Bullet_Enemy
+  - Block
   - 
   - 
   - 

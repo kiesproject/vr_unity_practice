@@ -32,9 +32,11 @@ public class MapSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (labyrinth == null) return;
-        Display_Player();
-        MapSystem_Update();
+        if ((labyrinth != null) && labyrinth.isCreatedData() && GameManager.instance.stageType == GameManager.StageType.LABYRINTH)
+        {
+            Display_Player();
+            MapSystem_Update();
+        }
     }
 
     public void Set_MapTile(int x, int y, Color color)
@@ -88,7 +90,7 @@ public class MapSystem : MonoBehaviour
         {
             Vector3Int poss = GameManager.instance.Get_PlayerPossToMap();
             int id = labyrinth.Get_TileData(poss.x, poss.y).TileID;
-            Debug.Log(string.Format("ID: {0} X: {1} Y: {2}", id, poss.x, poss.y));
+            //Debug.Log(string.Format("ID: {0} X: {1} Y: {2}", id, poss.x, poss.y));
             switch (id)
             {
                 case 4:   

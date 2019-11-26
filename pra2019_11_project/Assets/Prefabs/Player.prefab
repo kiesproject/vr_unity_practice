@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9139117695963577196}
   - component: {fileID: 9139117695963577197}
   - component: {fileID: 9139117695963577198}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9139117696269819453}
   - component: {fileID: 9139117696269819452}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9139117696571837435}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 9139117696975314997}
   - component: {fileID: 9139117696975315001}
   - component: {fileID: 9139117696975315000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9139117697484451272}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
