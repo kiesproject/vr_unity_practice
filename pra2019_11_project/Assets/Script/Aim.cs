@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class Aim : MonoBehaviour
 {
-
     public Transform MY;
     public Transform MX;
 
     public GameObject GameOver_A;
     public GameObject Sphere;
+
     private float reloadTime = 0.4f; //発射間隔
     private float time = 0.0f;
 
     // Use this for initialization
     void Start()
     {
-
         MY = transform.parent;
         MX = GetComponent<Transform>();
     }
@@ -50,7 +49,7 @@ public class Aim : MonoBehaviour
             {
                 var bullet = Instantiate(Sphere, transform.position, Quaternion.identity);
 
-                var ep = bullet.GetComponent<bullet>();
+                var ep = bullet.GetComponent<Bullet>();
                 ep.enemy_Poss = hit.collider.gameObject;
 
                 time = 0.0f;

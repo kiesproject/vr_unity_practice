@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7b4c12d76207d01409fd4274e4977660, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,11 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a852da8f0741d641b6abc9dfa41472d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Move: 0.02
+  Move: 1.5
+  score: 1
   Player: {fileID: 5208128036576522524, guid: 7b65588351673a2459db6fce7738db4e, type: 3}
   GameManager: {fileID: 2661752880400529401, guid: ea16e9d2ef249e549ab52019fd336295,
     type: 3}
-  score: 1
+  rb: {fileID: 1031133434282482086}
 --- !u!54 &1031133434282482086
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -127,4 +128,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1

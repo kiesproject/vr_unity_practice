@@ -3,24 +3,17 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-public class bullet : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
-
     public GameObject player_Poss;
     public GameObject enemy_Poss;
 
     float t = 0;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        //生成された玉の処理
+        //生成された弾の処理
         if (enemy_Poss != null)
         {
             player_Poss = gameObject;
@@ -34,7 +27,7 @@ public class bullet : MonoBehaviour
 
     }
 
-    //敵に接触した時、玉を消す
+    //敵に接触した時、弾を消す
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy")

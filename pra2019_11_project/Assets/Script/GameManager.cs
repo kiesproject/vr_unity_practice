@@ -13,9 +13,10 @@ public class GameManager : MonoBehaviour
     public Text HScore;
 
     public GameObject GameOver_A;
+    public GameObject[] randomEnemy;
 
     [HideInInspector]
-    public int score = 0;
+    public int score = 0; //取得したスコア
     private int Hscore = 0; //ハイスコア
 
     private int number = 0;
@@ -26,22 +27,21 @@ public class GameManager : MonoBehaviour
     float y = 0;
     float z = 0;
 
-    public GameObject[] randomEnemy;
-
-
     // Start is called before the first frame update
     void Start()
     {
-        //マウスカーソルをウィンドウから出さない
-        //マウスカーソルが見えなくなるが、Escキーで出現する
+        /*マウスカーソルをウィンドウから出さない
+        マウスカーソルが見えなくなるが、Escキーを押すと出てくる*/
         Cursor.lockState = CursorLockMode.Locked;
 
         filePath = Application.dataPath + "/" + ".savedata.json";
         save = new SaveData();
 
+        //前回までのハイスコアのロード
         Load();
         Hscore = save.Hscore_S;
         HScore.text = Hscore.ToString();
+
         //スコアの初期化
         GameScore.text = "0";
     }
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         //スコアの代入
         GameScore.text = score.ToString();
 
+        //ハイスコアの判定と記録
         if(score > Hscore)
         {
             save.Hscore_S = score;
@@ -61,8 +62,8 @@ public class GameManager : MonoBehaviour
 
         time += Time.deltaTime;
 
-            //敵のランダム出現
-            if (time > appearTime)
+        //敵のランダム出現
+        if (time > appearTime)
         {
             x = Random.Range(-9.0f, 9.0f);
             y = Random.Range(1.0f, 2.0f);
@@ -73,16 +74,16 @@ public class GameManager : MonoBehaviour
 
             time = 0.0f;
         }
-
     }
 
+    //セーブデータ
     [System.Serializable]
     public class SaveData
     {
         public int Hscore_S = 0;
     }
 
-
+    //セーブ処理
     public void Save()
     {
         string json = JsonUtility.ToJson(save);
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
         streamWriter.Close();
     }
 
+    //ロード処理
     public void Load()
     {
         if (File.Exists(filePath))

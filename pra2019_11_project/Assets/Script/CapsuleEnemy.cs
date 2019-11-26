@@ -5,9 +5,12 @@ using UnityEngine;
 public class CapsuleEnemy : MonoBehaviour
 {
     public float Move = 0.05f;　//敵（カプセル）の速度
+    public int score = 1;　//敵のポイント
+
     public GameObject Player;
     public GameObject GameManager;
-    public int score = 1;　//敵のポイント
+
+    public Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +26,7 @@ public class CapsuleEnemy : MonoBehaviour
         //プレイヤーの方に近づく処理
         transform.LookAt(Player.transform);
 
-        gameObject.transform.Translate(0, 0, Move);
+        rb.velocity = transform.forward * Move;
     }
 
     //玉に衝突した時の処理

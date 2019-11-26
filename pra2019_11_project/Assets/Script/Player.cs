@@ -10,12 +10,6 @@ public class Player : MonoBehaviour
     public Rigidbody rb;
     public float move = 1.0f; //インスペクターで速度の変更可能
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Rigidbody rb = transform.GetComponent<Rigidbody>();
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -52,7 +46,8 @@ public class Player : MonoBehaviour
         {
             GameOver_A.SetActive(true);
 
-            Invoke("ReturnTitle", 5); //5秒後にReturnTitleを呼び出す
+            //5秒後にReturnTitleを呼び出す
+            Invoke("ReturnTitle", 5);
         }
     }
 
