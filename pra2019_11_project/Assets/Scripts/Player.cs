@@ -15,6 +15,9 @@ public class Player : MonoBehaviour, IButtle
 
     int hp = 100;
     int max_hp = 100;
+    int weaponId = 0;
+
+
     bool isNoDamage = false;
     bool isDead = false;
 

@@ -5,8 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IButtle
 {
     int level = 1;
-    int hp = 10;
-    int max_hp = 10;
+    int hp = 25;
+    int max_hp = 25;
     bool isDead = false;
     int damage = 5;
 
