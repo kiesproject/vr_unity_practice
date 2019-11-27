@@ -1457,7 +1457,6 @@ GameObject:
   - component: {fileID: 5588483731762527653}
   - component: {fileID: 5588483731762527652}
   - component: {fileID: 3900064919724604372}
-  - component: {fileID: -1665873041210964125}
   m_Layer: 0
   m_Name: ConectorChunk
   m_TagString: Untagged
@@ -1564,19 +1563,6 @@ MonoBehaviour:
   - {fileID: 8603622261597225989}
   - {fileID: 1526638058214868647}
   - {fileID: 207745602338073078}
---- !u!114 &-1665873041210964125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5588483731762527675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bb714153cfb5b54289f6d68d7a58eba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  group: 0
 --- !u!1 &5712044371582078866
 GameObject:
   m_ObjectHideFlags: 0

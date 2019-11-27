@@ -81,28 +81,35 @@ public class ChunkGenerator : MonoBehaviour
         int count = 0;
 
         GameObject wall = Instantiate(Chunks[mapData[x, z].ChunkIndex], new Vector3(10 * x, 0, 10 * z), Quaternion.identity);
+        bool[] canMoveData = new bool[4];
         if (x == 0)
         {
-            count = wall.GetComponent<WallController>().SetWall(3);
+            canMoveData[3] = false;
+            count++;
         }
         else if (x == (MapX - 1))
         {
-            count = wall.GetComponent<WallController>().SetWall(1);
+            canMoveData[1] = false;
+            count++;
         }
 
         if (z == 0)
         {
-            count = wall.GetComponent<WallController>().SetWall(2);
+            canMoveData[2] = false;
+            count++;
         }
         else if (z == (MapZ - 1))
         {
-            count = wall.GetComponent<WallController>().SetWall(0);
+            canMoveData[0] = false;
+            count++;
         }
+
 
         if (count <= 1)
         {
-            wall.GetComponent<WallController>().SetWall(Random.Range(0, 4));
+            canMoveData[Random.Range(0, 4)] = false;
         }
+        wall.GetComponent<WallController>().SetWall(canMoveData);
     }
 
     private void CreateStage()

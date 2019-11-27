@@ -90,6 +90,26 @@ public class ChunkGeneratorV2 : MonoBehaviour
                 {
                     mapData[i, j].ChunkIndex = 0;
                 }
+
+                if (i == 0)
+                {
+                    mapData[i, j].CanMove[(int)Dirction.Left] = false;
+                }
+                
+                if(j == 0)
+                {
+                    mapData[i, j].CanMove[(int)Dirction.Down] = false;
+                }
+                
+                if(i == MapX - 1)
+                {
+                    mapData[i, j].CanMove[(int)Dirction.Right] = false;
+                }
+                
+                if(j == MapZ - 1)
+                {
+                    mapData[i, j].CanMove[(int)Dirction.Up] = false;
+                }
             }
         }
     }
@@ -176,7 +196,8 @@ public class ChunkGeneratorV2 : MonoBehaviour
         {
             for (int j = 0; j < MapZ; j++)
             {
-                Instantiate(Chunks[mapData[i, j].ChunkIndex], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
+                GameObject instans = Instantiate(Chunks[mapData[i, j].ChunkIndex], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
+                if (mapData[i, j].ChunkIndex == 0) instans.GetComponent<WallController>().SetWall(mapData[i,j].CanMove);
             }
         }
     }
