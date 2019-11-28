@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44331303, g: 0.4925716, b: 0.5722196, a: 1}
+  m_IndirectSpecularColor: {r: 0.4433136, g: 0.49257243, b: 0.5722208, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -207,7 +207,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93953136}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: -10}
+  m_LocalPosition: {x: 10, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2330,7 +2330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4793183225674318, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4793183225674318, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2338,7 +2338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4793183225674318, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4793183225674318, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2400,7 +2400,7 @@ PrefabInstance:
     - target: {fileID: 114792328696913770, guid: eed966e4f75f16d4fa2ce1736befb98f,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eed966e4f75f16d4fa2ce1736befb98f, type: 3}
@@ -2630,7 +2630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Chunks:
   - {fileID: 5588483731762527675, guid: 88574dcc8bd58314186274ab52e7208f, type: 3}
-  - {fileID: 466916953464605349, guid: b506e0fa6a3804a4d88994d33e60e275, type: 3}
+  - {fileID: 2128572129234461265, guid: 2cfbd7bd42b71e34b9c9ed059af34d0d, type: 3}
   MapX: 7
   MapZ: 7
 --- !u!1 &2068858725
