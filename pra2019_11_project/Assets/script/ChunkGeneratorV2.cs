@@ -13,10 +13,13 @@ public class ChunkGeneratorV2 : MonoBehaviour
         {
             for (int k = 0; k < CanMove.Length; k++)
             {
-                CanMove[k] = true;
+                CanMove[k] = false;
             }
         }
     }
+
+    const int Janction = 1;
+    const int Room = 0;
     
     private enum Dirction
     {
@@ -25,6 +28,8 @@ public class ChunkGeneratorV2 : MonoBehaviour
         Down = 2,
         Left = 3
     }
+
+    Dirction oldDir = Dirction.Down;
 
     private List<Vector2Int> StartCells;
 
@@ -54,7 +59,7 @@ public class ChunkGeneratorV2 : MonoBehaviour
         {
             for (int j = 0; j < MapZ; j++)
             {
-                mapData[i, j].ChunkIndex = 0;
+                mapData[i, j].ChunkIndex = Janction;
 
                 mapData[i, j].CanMove = new bool[4];
                 mapData[i, j].ResetMoveData();
@@ -71,11 +76,11 @@ public class ChunkGeneratorV2 : MonoBehaviour
             {
                 if(i == 0 || j == 0 || i == MapX - 1 || j == MapZ - 1)
                 {
-                    mapData[i, j].ChunkIndex = 1;
+                    mapData[i, j].ChunkIndex = Room;
                 }
                 else
                 {
-                    mapData[i, j].ChunkIndex = 0;
+                    mapData[i, j].ChunkIndex = Janction;
                 }
             }
         }
@@ -88,27 +93,27 @@ public class ChunkGeneratorV2 : MonoBehaviour
             {
                 if (i == 0 || j == 0 || i == MapX - 1 || j == MapZ - 1)
                 {
-                    mapData[i, j].ChunkIndex = 0;
+                    mapData[i, j].ChunkIndex = Janction;
                 }
 
                 if (i == 0)
                 {
-                    mapData[i, j].CanMove[(int)Dirction.Left] = false;
+                    mapData[i, j].CanMove[(int)Dirction.Left] = true;
                 }
                 
                 if(j == 0)
                 {
-                    mapData[i, j].CanMove[(int)Dirction.Down] = false;
+                    mapData[i, j].CanMove[(int)Dirction.Down] = true;
                 }
                 
                 if(i == MapX - 1)
                 {
-                    mapData[i, j].CanMove[(int)Dirction.Right] = false;
+                    mapData[i, j].CanMove[(int)Dirction.Right] = true;
                 }
                 
                 if(j == MapZ - 1)
                 {
-                    mapData[i, j].CanMove[(int)Dirction.Up] = false;
+                    mapData[i, j].CanMove[(int)Dirction.Up] = true;
                 }
             }
         }
@@ -120,44 +125,44 @@ public class ChunkGeneratorV2 : MonoBehaviour
         {
             List<Dirction> directions = new List<Dirction>();
 
-            if (mapData[x, z - 1].ChunkIndex == 0 && mapData[x, z - 2].ChunkIndex == 0)
+            if (mapData[x, z - 1].ChunkIndex == Janction && mapData[x, z - 2].ChunkIndex == Janction)
                 directions.Add(Dirction.Down);
 
-            if (mapData[x + 1, z].ChunkIndex == 0 && mapData[x + 2, z].ChunkIndex == 0)
+            if (mapData[x + 1, z].ChunkIndex == Janction && mapData[x + 2, z].ChunkIndex == Janction)
                 directions.Add(Dirction.Right);
 
-            if (mapData[x, z + 1].ChunkIndex == 0 && mapData[x, z + 2].ChunkIndex == 0)
+            if (mapData[x, z + 1].ChunkIndex == Janction && mapData[x, z + 2].ChunkIndex == Janction)
                 directions.Add(Dirction.Up);
 
-            if (mapData[x - 1, z].ChunkIndex == 0 && mapData[x -2, z].ChunkIndex == 0)
+            if (mapData[x - 1, z].ChunkIndex == Janction && mapData[x - 2, z].ChunkIndex == Janction)
                 directions.Add(Dirction.Left);
 
             if (directions.Count == 0) break;
 
-            SetPath(x, z);
+            SetPath(x, z,Dirction.Up);
 
             int dirIndex = Random.Range(0, directions.Count);
 
             switch (directions[dirIndex])
             {
                 case Dirction.Down:
-                    SetPath(x, --z);
-                    SetPath(x, --z);
+                    SetPath(x, --z, Dirction.Down);
+                    SetPath(x, --z, Dirction.Down);
                     break;
 
                 case Dirction.Right:
-                    SetPath(++x, z);
-                    SetPath(++x, z);
+                    SetPath(++x, z, Dirction.Right);
+                    SetPath(++x, z, Dirction.Right);
                     break;
 
                 case Dirction.Up:
-                    SetPath(x, ++z);
-                    SetPath(x, ++z);
+                    SetPath(x, ++z, Dirction.Up);
+                    SetPath(x, ++z, Dirction.Up);
                     break;
 
                 case Dirction.Left:
-                    SetPath(--x, z);
-                    SetPath(--x, z);
+                    SetPath(--x, z, Dirction.Left);
+                    SetPath(--x, z, Dirction.Left);
                     break;
             }
         }
@@ -169,13 +174,27 @@ public class ChunkGeneratorV2 : MonoBehaviour
         }
     }
 
-    private void SetPath(int x, int z)
+    private void SetPath(int x, int z,Dirction dir)
     {
-        mapData[x, z].ChunkIndex = 1;
+        mapData[x, z].ChunkIndex = Room;
+
+        //if (oldDir == Dirction.Up || oldDir == Dirction.Right)
+        //{
+        //    mapData[x, z].CanMove[(int)oldDir + 2] = true;
+        //}
+        //else
+        //{
+        //    mapData[x, z].CanMove[(int)oldDir - 2] = true;
+        //}
+        
+        mapData[x, z].CanMove[(int)dir] = true;
+
         if(x % 2 == 1 && z % 2 == 1)
         {
             StartCells.Add(new Vector2Int(x, z));
         }
+
+        //oldDir = dir;
     }
 
     private Vector2Int GetStartCell()
@@ -197,7 +216,7 @@ public class ChunkGeneratorV2 : MonoBehaviour
             for (int j = 0; j < MapZ; j++)
             {
                 GameObject instans = Instantiate(Chunks[mapData[i, j].ChunkIndex], new Vector3(10 * i, 0, 10 * j), Quaternion.identity);
-                if (mapData[i, j].ChunkIndex == 0) instans.GetComponent<WallController>().SetWall(mapData[i,j].CanMove);
+                if (mapData[i, j].ChunkIndex == Room) instans.GetComponent<WallController>().SetWall(mapData[i,j].CanMove);
             }
         }
     }
