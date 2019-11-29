@@ -97,18 +97,16 @@ public class GameController : MonoBehaviour
     }
     
     //------
-
     public void GoReady()
     {
         state = State.Ready;
     }
 
     //------
-
     private void WaitForPlaying()
     {
         t -= Time.deltaTime;
-        TimeText.GetComponent<Text>().text = t.ToString("F3");
+        TimeText.GetComponent<Text>().text = t.ToString("F1");
         
         if(t <= 0)
         {
@@ -120,7 +118,7 @@ public class GameController : MonoBehaviour
     {
         Targetcount = GameObject.FindGameObjectsWithTag("Target").Length;
     }
-
+    
     //------
 
     public void HitTarget()
