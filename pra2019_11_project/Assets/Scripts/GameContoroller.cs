@@ -29,10 +29,12 @@ public class GameContoroller : MonoBehaviour
     public GameObject Warning;
     public GameObject Destination;
     private PlayerScript playerScript;
-    public Text timetext,scoretext,jumpcounttext,gameovertext,gameovertext2;
+    public Text timetext, scoretext, jumpcounttext,gameovertext,gameovertext2,result;
+    public Image blackbackGround;
     private float x;
     private float z;
-    
+    private string name;
+
     private void Start()
     {
         //playerscriptからjumpcountを得るためにcomponentを取得
@@ -44,14 +46,15 @@ public class GameContoroller : MonoBehaviour
         //先ほど取得したplayerscriptのjumpcountを使う
         jumpcounttext.text = "jump残り:" + playerScript.jumpcount.ToString();
 
-        //ゲームオーバー用の文字をenabledにしておく,ゲームオーバー時に使うので取得しておく
+        //ゲームオーバー用の文字などを取得しenabledにしておく
 
         //★…子オブジェクトにしたらテキスト説明が一緒に消えると思ったが消えなかったので仕方なく2個同時に操作している
         gameovertext = GameObject.Find("GameOver").GetComponent<Text>();
         gameovertext2 = GameObject.Find("GameOver2").GetComponent<Text>();
         gameovertext.enabled = false;
         gameovertext2.enabled = false;
-
+        blackbackGround = GameObject.Find("BlackBackGround").GetComponent<Image>();
+        result = GameObject.Find("Result").GetComponent<Text>();
 
         //☆重要な場所1 ここで敵を生成している
         //コルーチンでEnemyを生成するメソッドをborninterval秒ごとに呼び出している
@@ -121,14 +124,56 @@ public class GameContoroller : MonoBehaviour
 
     void gameover()
     {
-        //start()で取得してあるのでこのまま使える,
+        //まず画面を暗くする
+        blackbackGround.enabled = true;
+        //start()で取得してあるのでこのまま使える,ゲームオーバーの表示
         gameovertext.enabled = true;
         gameovertext2.enabled = true;
         //ゲーム中の時間を止める、これでプレイヤーや制限時間が進まない
         Time.timeScale = 0;
+        ///
+        /// スコアで称号が変化
+        ///
+        if (score < 5)
+        {
+            name = "ミジンコ";
+        }
+        else if (score < 10)
+        {
+            name = "一般人";
+        }
+        else if (score < 15)
+        {
+            name = "地方芸人";
+        }
+        else if (score < 20)
+        {
+            name = "テレビに出てる人";
+        }
+        else if (score < 25)
+        {
+            name = "みのもんだ";
+        }
+        else if (score < 30)
+        {
+            name = "タピオカ";
+
+        } 
+        else if (30<=score)
+        {
+            name = "GACUKT";
+        }
+
+        result.enabled = true;
+        result.text = "あなたは・・・\n" + name+"級です";
+
+
         //spaceキーでtitleへ
         if (Input.GetKeyDown("space"))
         {
+            //画面を暗くするのとresult表示を解除
+            blackbackGround.enabled = false;
+            result.enabled = false;
             //timescaleを戻しておく
             Time.timeScale = 1.0f;
             SceneManager.LoadScene("title");

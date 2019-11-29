@@ -15,7 +15,21 @@ public class PlayerScript : MonoBehaviour
     //ジャンプは一ゲーム中3回まで
     public int jumpcount=3;
     [SerializeField] private bool jumping = false;
-    
+
+    //効果音を指定
+    public AudioClip Destination1;
+    public AudioClip Destination2;
+    public AudioClip Destination3;
+    public AudioClip Destination4;
+    public AudioClip Destination5;
+    public AudioClip Destination6;
+    public AudioClip Destination7;
+    public AudioClip Destination8;
+    public AudioClip Destination9;
+    public AudioClip Jump;
+
+
+
     private void Start()
     {
         //試しにスタートで取得してみる
@@ -53,6 +67,8 @@ public class PlayerScript : MonoBehaviour
     {
         if (jumpcount != 0)
         {
+            //ジャンプ時にSEを鳴らす
+            SoundManager.instance.RandomSE(Jump);
             rb.AddForce(Vector3.up * 2300);
             jumpcount -= 1;
         }
@@ -80,10 +96,23 @@ public class PlayerScript : MonoBehaviour
 
     }
     //Destinationに到着した場合 destinationを破壊してtimeaddメソッドを実行
+    //追加でSEを鳴らす
     private void OnTriggerEnter(Collider Collider)
     {
         if (Collider.gameObject.tag == ("Destination"))
         {
+            //★もうちょっとSEを鳴らすのに上手いやり方があると思う
+            SoundManager.instance.RandomSE(
+                Destination1,
+                Destination2, 
+                Destination3,
+                Destination4,
+                Destination5,
+                Destination6,
+                Destination7,
+                Destination8,
+                Destination9);
+            //destinationを破壊、時間追加
             Destroy(Collider.gameObject);
             gamecontroller.timeadd();
         }
