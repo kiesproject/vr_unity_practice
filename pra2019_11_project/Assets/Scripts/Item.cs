@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Item : MonoBehaviour
+public class Item
 {
     public string NAME = "謎のアイテム";
     public GameObject itemObject;
@@ -13,6 +14,11 @@ public class Item : MonoBehaviour
     }
 
     public virtual void Get_Item()
+    {
+
+    }
+
+    public virtual void Create(float luck, float unluck)
     {
 
     }
@@ -65,34 +71,53 @@ public class Weapon : Item
 
         NAME = a + "ハンドガン";
     }
+
+    public override void Get_Item()
+    {
+        if (GameManager.instance != null)
+        {
+            if (GameManager.instance.Add_Item(this))
+            {
+                GameManager.instance.luck += 0.2f * (bulletPowor_p + fireRate_p) / 2;
+                GameManager.instance.unluck -= 0.2f * (bulletPowor_p + fireRate_p) / 2;
+            }
+        }
+    }
+
+    public override void Create(float luck, float unluck)
+    {
+        bulletPowor_p = Random.Range(0.7f - luck, 1.3f + unluck);
+        fireRate_p = Random.Range(0.7f - luck, 1.3f + unluck);
+        Naming();
+    }
 }
 
 public class Armor : Item
 {
-    public float resistance_p = 1;
-    public float res_knok_p = 1;
+    public float add_resistance_p = 1;
+    public float add_res_knok_p = 1;
     public float add_speed_p = 1;
 
     public override void Naming()
     {
         string a = "";
         string s = "";
-        if (1.5f <= res_knok_p && res_knok_p < 3.5f)
+        if (1.5f <= add_res_knok_p && add_res_knok_p < 3.5f)
         {
             a += "重い";
-        }else if(3.5f <= res_knok_p)
+        }else if(3.5f <= add_res_knok_p)
         {
             a += "不動たる";
         }
-        else if (-1.5f <= resistance_p && resistance_p < 0.0f)
+        else if (-1.5f <= add_resistance_p && add_resistance_p < 0.0f)
         {
             s = "呪いアーマー";
         }
-        else if (-2.5f <= resistance_p && resistance_p < -1.5f)
+        else if (-2.5f <= add_resistance_p && add_resistance_p < -1.5f)
         {
             s = "災厄アーマー";
         }
-        else if (resistance_p < -2.5f)
+        else if (add_resistance_p < -2.5f)
         {
             s = "滅亡アーマー";
         }
@@ -123,31 +148,70 @@ public class Armor : Item
         }
 
 
-        if (0.0f <= resistance_p && resistance_p < 1.2f)
+        if (0.0f <= add_resistance_p && add_resistance_p < 1.2f)
         {
             s = "皮アーマー";
-        }else if(1.2f <= resistance_p && resistance_p < 2.5f)
+        }else if(1.2f <= add_resistance_p && add_resistance_p < 2.5f)
         {
             s = "鉄アーマー";
-        }else if(2.5f <= resistance_p && resistance_p < 3.5f)
+        }else if(2.5f <= add_resistance_p && add_resistance_p < 3.5f)
         {
             s = "鋼鉄アーマー";
-        }else if(3.5 <= resistance_p)
+        }else if(3.5 <= add_resistance_p)
         {
             s = "ミスリルアーマー";
-        }else if(-1.5f <= resistance_p && resistance_p < 0.0f)
+        }else if(-1.5f <= add_resistance_p && add_resistance_p < 0.0f)
         {
             s = "呪いアーマー";
         }
-        else if (-2.5f <= resistance_p && resistance_p < -1.5f)
+        else if (-2.5f <= add_resistance_p && add_resistance_p < -1.5f)
         {
             s = "災厄アーマー";
-        }else if(resistance_p < -2.5f)
+        }else if(add_resistance_p < -2.5f)
         {
             s = "滅亡アーマー";
         }
 
         NAME = a + s;
+    }
+
+    public override void Create(float luck, float unluck)
+    {
+        add_resistance_p = Random.Range(0 - luck, 0.6f + unluck);
+        add_res_knok_p = Random.Range(0 - luck, 0.6f + unluck);
+        add_speed_p = Random.Range(0 - luck, 0.6f + unluck);
+
+        if (add_resistance_p < 0)
+        {
+            add_res_knok_p += Random.Range(0, Mathf.Abs(add_resistance_p) * (unluck + 1.0f));
+            add_speed_p += Random.Range(0, Mathf.Abs(add_resistance_p) * (unluck + 1.0f));
+        }
+
+        if (add_res_knok_p < 0)
+        {
+            add_resistance_p += Random.Range(0, Mathf.Abs(add_res_knok_p) * (unluck + 1.0f));
+            add_speed_p += Random.Range(0, Mathf.Abs(add_res_knok_p) * (unluck + 1.0f));
+        }
+
+        if (add_speed_p < 0)
+        {
+            add_res_knok_p += Random.Range(0, Mathf.Abs(add_speed_p) * (unluck + 1.0f));
+            add_resistance_p += Random.Range(0, Mathf.Abs(add_speed_p) * (unluck + 1.0f));
+        }
+
+        Naming();
+    }
+
+    public override void Get_Item()
+    {
+        if (GameManager.instance != null)
+        {
+            if (GameManager.instance.Add_Item(this))
+            {
+                GameManager.instance.luck += 0.2f * (add_resistance_p + add_res_knok_p + add_speed_p) / 3;
+
+            }
+        }
     }
 }
 
@@ -199,17 +263,92 @@ public class Drink : Item
 
         NAME = a + s;
     }
+
+    public override void Create(float luck, float unluck)
+    {
+        heal = Random.Range(-30 - (int)(luck * 30), 100 + (int)(unluck * 40));
+        addResistance = Random.Range(0 - (int)(luck * 10), 3 + (int)(unluck * 10));
+        addSpeed = Random.Range(0 - (int)(luck * 5), 3 + (int)(unluck * 10));
+        timeAddResistance = Random.Range(0 - (int)(luck * 5), 3 + (int)(unluck * 10));
+        timeAddSpeed = Random.Range(0 - (int)(luck * 5), 3 + (int)(unluck * 10));
+        time = Random.Range(2 - (int)(luck * 5), 10 + (int)(unluck * 10));
+
+        Naming();
+    }
+
+    public override void Get_Item()
+    {
+        if (GameManager.instance != null)
+        {
+            if (GameManager.instance.Add_Item(this))
+            {
+                float h = heal / 200;
+                float adr = addResistance / 20;
+                float ads = addSpeed / 20;
+                float t = time / 20;
+                float tar = timeAddResistance / 20;
+                float tas = timeAddSpeed / 20;
+                float l = (h + adr + ads + t + tar + tas) / 5;
+
+                GameManager.instance.luck += l;
+            }
+        }
+    }
 }
 
 public class Gold : Item
 {
     public int gold = 0;
+    public float addLuck = 0;
+
+    public override void Naming()
+    {
+        NAME = gold.ToString() + "G";
+    }
+
+    public override void Create(float luck, float unluck)
+    {
+        gold = Random.Range(10 - (int)luck * 30, 100 + (int)unluck * 30);
+        if (gold < 0) { addLuck = gold / 80; gold = 1; }
+    }
+
+    public override void Get_Item()
+    {
+        GameManager.instance.golds += gold;
+
+        if (addLuck < 0)
+        {
+            GameManager.instance.unluck += addLuck;
+        }
+        else
+        {
+            GameManager.instance.luck += addLuck;
+        }
+    }
 }
 
 public class Key : Item
 {
     public override void Get_Item()
     {
-        base.Get_Item();
+        GameManager.instance.Add_Key(1);
+    }
+}
+
+public class Bullet : Item
+{
+    public int number = 10;
+
+    public override void Get_Item()
+    {
+        GameManager.instance.player.bullets += number;
+    }
+}
+
+public class Map : Item
+{
+    public override void Get_Item()
+    {
+        GameManager.instance.mapSystem.Set_MapRoomAll();
     }
 }

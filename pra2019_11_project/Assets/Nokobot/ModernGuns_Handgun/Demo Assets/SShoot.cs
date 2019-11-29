@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleShoot : MonoBehaviour
+public class SShoot : MonoBehaviour
 {
 
     public GameObject bulletPrefab;
@@ -11,6 +11,7 @@ public class SimpleShoot : MonoBehaviour
     public Transform barrelLocation;
     public Transform casingExitLocation;
 
+    private Vector3 target;
 
     public float shotPower = 100f;
 
@@ -21,11 +22,17 @@ public class SimpleShoot : MonoBehaviour
     }
 
     void Update()
+    { 
+
+    }
+
+    public void ShootFire(Vector3 target)
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            GetComponent<Animator>().SetTrigger("Fire");
-        }
+        this.target = target;
+        barrelLocation.LookAt(target);
+
+        GetComponent<Animator>().SetTrigger("Fire");
+        
     }
 
     void Shoot()
@@ -35,8 +42,10 @@ public class SimpleShoot : MonoBehaviour
         // bullet.GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
 
         GameObject tempFlash;
-       Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation).GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
-       tempFlash = Instantiate(muzzleFlashPrefab, barrelLocation.position, barrelLocation.rotation);
+
+        var b = target - barrelLocation.position;
+        Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation).GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
+        tempFlash = Instantiate(muzzleFlashPrefab, barrelLocation.position, barrelLocation.rotation);
 
        // Destroy(tempFlash, 0.5f);
         //  Instantiate(casingPrefab, casingExitLocation.position, casingExitLocation.rotation).GetComponent<Rigidbody>().AddForce(casingExitLocation.right * 100f);

@@ -34,6 +34,8 @@ public class Enemy : MonoBehaviour, IButtle
         {
             Chase(GameManager.instance.player.transform.position);
         }
+
+        Debug.Log(string.Format("HP: {0} MAX_HP: {1}", HP(), MAX_HP()));
     }
 
     private void Chase(Vector3 target)

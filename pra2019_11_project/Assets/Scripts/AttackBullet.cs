@@ -19,6 +19,7 @@ public class AttackBullet : MonoBehaviour
         {
             var o = Instantiate(bulletE, contact.point, Quaternion.identity);
             o.transform.LookAt(contact.point + contact.normal);
+            
             var ib = collision.collider.gameObject.GetComponent<IButtle>();
             if (ib != null)
             {

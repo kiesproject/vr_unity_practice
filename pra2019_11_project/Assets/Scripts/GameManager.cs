@@ -14,10 +14,18 @@ public class GameManager : MonoBehaviour
     // --- --- --- --- --- --- --- --- --- --- ---
     public Labyrinth labyrinth;
     public Player player;
+    public MapSystem mapSystem;
+    public ThroughMassage throughMassage;
     private const string stageName = "Stage";
     private Scene stageScene;
 
+    public bool cursorOnUI = false;
 
+    [HideInInspector] public List<Item> itemList;
+    [HideInInspector] public int itemCapa = 5;
+    [HideInInspector] public int golds = 0;
+    [HideInInspector] public float luck = 0;
+    [HideInInspector] public float unluck = 0;
 
 
     public enum StageType
@@ -43,6 +51,9 @@ public class GameManager : MonoBehaviour
 
         stageScene = SceneManager.GetSceneByName(stageName);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        itemList = new List<Item>();
+        itemList.Add(new Weapon());
+        
 
     }
 
@@ -127,6 +138,20 @@ public class GameManager : MonoBehaviour
             }
         }
 
+    }
+
+    /// <summary>
+    /// アイテムをリストに追加する
+    /// </summary>
+    /// <param name="item"></param>
+    public bool Add_Item(Item item)
+    {
+        if (itemList.Count < itemCapa)
+        {
+            itemList.Add(item);
+            return true;
+        }
+        return false;
     }
 
     public void Add_Key(int value)

@@ -9,14 +9,23 @@ public class Player : MonoBehaviour, IButtle
 
     float horizontal = 0;
     float vertical = 0;
-    float coefficient = 10;
+    [SerializeField]
+    float coefficient = 200;
+    [SerializeField]
+    float speed = 2.5f;
 
     //--- --- --- --- --- ---
 
     int hp = 100;
     int max_hp = 100;
-    int weaponId = 0;
-
+    [HideInInspector]
+    public Weapon weapon;
+    [HideInInspector]
+    public Armor armor;
+    [HideInInspector]
+    public ItemObject culletTarget;
+    [SerializeField]
+    public int bullets = 10;
 
     bool isNoDamage = false;
     bool isDead = false;
@@ -36,7 +45,7 @@ public class Player : MonoBehaviour, IButtle
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(string.Format("hp: {0} maxHp: {1}", HP(), MAX_HP()));
+        //Debug.Log(string.Format("hp: {0} maxHp: {1}", HP(), MAX_HP()));
 
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
@@ -48,7 +57,7 @@ public class Player : MonoBehaviour, IButtle
         {
             Vector3 dirMove = myCamera.Get_MoveForce(vertical, horizontal);
 
-            rig.AddForce(coefficient * dirMove - rig.velocity);
+            rig.AddForce(coefficient * (speed * dirMove - rig.velocity));
         }
     }
 

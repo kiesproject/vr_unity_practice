@@ -27,6 +27,8 @@ public class MapSystem : MonoBehaviour
         labyrinth = GameManager.instance.labyrinth;
         rectTransform = transform as RectTransform;
         sizeTile = new Vector2Int((int)(tile.transform as RectTransform).sizeDelta.x ,(int)(tile.transform as RectTransform).sizeDelta.y);
+
+        //Set_MapRoomAll();
     }
 
     // Update is called once per frame
@@ -55,9 +57,58 @@ public class MapSystem : MonoBehaviour
         }
     }
 
+    public void Set_MapRoomAll()
+    {
+        if (!labyrinth.isCreatedData()) return;
+
+        for (int i=0; i < labyrinth.vertical_size-1; i++)
+        {
+            for (int j=0; j < labyrinth.horizontal_size-1; j++)
+            {
+                switch(labyrinth.Get_TileData(i, j).TileID)
+                {
+                    case 2:
+                        Set_MapTile(i, j, Color.blue);
+                        break;
+                    case 3:
+                        Set_MapTile(i, j, Color.grey);
+                        break;
+                    case 4:
+                        Set_MapTile(i, j, Color.white);
+                        break;
+                    default:
+                        break;
+                }
+
+                if (labyrinth.itemMapList[new Vector2(i, j)] == 0)
+                {
+                    Set_MapTile(i, j, Color.yellow);
+                }
+                else if (labyrinth.itemMapList[new Vector2(i, j)] == 2)
+                {
+                    Set_MapTile(i, j, Color.green);
+                }
+            }
+        }
+    }
+
     void Set_MapRoom(int x, int y, Color color)
     {
-        Set_MapTile(x, y, color);
+        if (labyrinth.itemMapList.ContainsKey(new Vector2(x, y)))
+        {
+            if (labyrinth.itemMapList[new Vector2(x, y)] == 0)
+            {
+                Set_MapTile(x, y, Color.yellow);
+            }
+            else if (labyrinth.itemMapList[new Vector2(x, y)] == 2)
+            {
+                Set_MapTile(x, y, Color.green);
+            }
+            else
+            {
+                Set_MapTile(x, y, color);
+            }
+        }
 
         Vector2[] dir =
         {

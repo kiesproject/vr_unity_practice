@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ShootController : MonoBehaviour
 {
     Camera _camera;
     public GameObject hand;
+    public GameObject test;
+
+    public SShoot sShoot;
 
     // Start is called before the first frame update
     void Start()
@@ -19,8 +23,19 @@ public class ShootController : MonoBehaviour
     {
         if (_camera != null)
         {
-            var pos = ScreenToWorld(2);
+            var pos = ScreenToWorld2();
             hand.transform.LookAt(pos);
+
+            if (Input.GetMouseButtonDown(0) && !GameManager.instance.cursorOnUI)
+            {
+                sShoot.ShootFire(pos);
+            }
+        }
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            // 処理したい内容
+            Debug.Log("On uGUI");
         }
     }
 
@@ -30,7 +45,23 @@ public class ShootController : MonoBehaviour
         // zの値をスクリーンの位置(カメラからz離れた位置)
         screenPos.z = distance;
         // スクリーン座標をワールド座標に変換
-        return _camera.ScreenToWorldPoint(screenPos + hand.transform.localPosition);
+        return _camera.ScreenToWorldPoint(screenPos);
             
+    }
+
+    private Vector3 ScreenToWorld2()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit = new RaycastHit();
+
+        var pos = ScreenToWorld(2);
+        if (Physics.Raycast(ray, out hit))
+        {
+            pos = hit.point;
+            
+        }
+
+        test.transform.position = pos;
+        return pos;
     }
 }

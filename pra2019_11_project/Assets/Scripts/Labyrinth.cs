@@ -30,6 +30,8 @@ public class Labyrinth : MonoBehaviour
     private Rect originRect;            //根の矩形データ
     private bool isCreated = false;
 
+    public Dictionary<Vector2, int> itemMapList;
+
     /// <summary>
     /// 部屋データを取得する
     /// </summary>
@@ -155,6 +157,87 @@ public class Labyrinth : MonoBehaviour
     private int Get_TileIndex(int x, int y)
     {
         return y * horizontal_size + x;
+    }
+
+    public void Create_ItemMap()
+    {
+        if (isCreatedData())
+        {
+            itemMapList = new Dictionary<Vector2, int>();
+
+            //鍵
+            for (int i=0; i < 3; i++)
+            {
+                while (true)
+                {
+                    var room = listRooms[Random.Range(0, listRooms.Count)];
+                    int x = Random.Range(1, room.width - 2);
+                    int y = Random.Range(1, room.height - 2);
+
+                    if (!itemMapList.ContainsKey(new Vector2(x, y)))
+                    {
+                        itemMapList.Add(new Vector2(x, y), 0);
+                        break;
+                    }
+                    
+                }
+            }
+
+            //地図
+            if(Random.Range(0, 5) == 0)
+            {
+                while (true)
+                {
+                    var room = listRooms[Random.Range(0, listRooms.Count)];
+                    int x = Random.Range(1, room.width - 2);
+                    int y = Random.Range(1, room.height - 2);
+
+                    if (!itemMapList.ContainsKey(new Vector2(x, y)))
+                    {
+                        itemMapList.Add(new Vector2(x, y), 1);
+                        break;
+                    }
+                }
+            }
+
+            //ゴール
+            while(true)
+            {
+                var room = listRooms[Random.Range(0, listRooms.Count)];
+                int x = Random.Range(1, room.width - 2);
+                int y = Random.Range(1, room.height - 2);
+
+                if (!itemMapList.ContainsKey(new Vector2(x, y)))
+                {
+                    itemMapList.Add(new Vector2(x, y), 2);
+                    break;
+                }
+            }
+
+            //アイテム
+            foreach (var room in listRooms)
+            {
+                int p = 0;
+                if (Random.Range(0, 10) % 2 == 0) continue;
+                while (Random.Range(0, 100) + 1 > p)
+                {
+                    p += 50;
+                    while (true)
+                    {
+                        int x = Random.Range(1, room.width - 2);
+                        int y = Random.Range(1, room.height - 2);
+
+                        if (!itemMapList.ContainsKey(new Vector2(x, y)))
+                        {
+                            itemMapList.Add(new Vector2(x, y), 5);
+                            break;
+                        }
+                    }
+                }
+            }
+
+        }
+
     }
 
     private bool Create_Room(int x_max, int y_max, int x_min, int y_min, Rect rectBase)
@@ -320,6 +403,8 @@ public class Labyrinth : MonoBehaviour
         int y_min_room = config.y_min_room;
         int route_addRate = config.route_addRate;
 
+        listRooms = new List<RoomData>();
+
         //タイルデータを生成・初期化
         Create_TileData(x_size_laby, y_size_laby);
         //矩形を自動生成
@@ -337,6 +422,7 @@ public class Labyrinth : MonoBehaviour
         FixRoutingList(ref routeData); //ルート関係情報を修正する
         Create_Route(routeData); //通路作成
         Put_TileTrace(); //タイルマップを元にブロックを配置
+        Create_ItemMap(); //アイテムマップを作成  
 
         Test_TileMap();
     }
