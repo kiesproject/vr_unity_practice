@@ -1,0 +1,470 @@
+goalY == nextIndex / meiroNeighborhood && goalX < nextIndex% meiroNeighborhood|| goalY < nextIndex / meiroNeighborhood && goalX == nextIndex % meiroNeighborhood || goalY == nextIndex / meiroNeighborhood && goalX > nextIndex % meiroNeighborhood || goalY > nextIndex / meiroNeighborhood && goalX == nextIndex % meiroNeighborhood
+
+else if((goalY == nextIndexY && goalX < nextIndexX) || (goalY < nextIndexY && goalX ==nextIndexX) || (goalY == nextIndexY && goalX > nextIndexX) || (goalY >nextIndexY && goalX == nextIndexX))
+            {
+                bool[] loadvisible=new bool[changeNextindexArray.Length];
+                foreach (var ch in changeNextindexArray) {
+                    Debug.Log("changeNextArray‚Ì’†g‚Í" + ch+"\n"+"changeNextindexArray‚Ì’†g‚Í"+meiroInt[ch]);
+                        }
+                for(int index = 0; index < loadvisible.Length; index++)
+                {
+                    if (meiroInt[changeNextindexArray[index]] == 3 || meiroInt[changeNextindexArray[index]] == 4 )
+                    {
+                        loadvisible[index] = true;
+                    }
+                    else
+                    {
+                        loadvisible[index] = false;
+                    }
+                }
+
+                foreach(var a in loadvisible)
+                {
+                    Debug.Log("•Ç‚â“¹‚ª‚ ‚Á‚½êŠ‚Í" + a);
+                }
+
+                if (goIndex == 0)
+                {
+                    if (loadvisible[0] && loadvisible[1] && loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+                    else if (loadvisible[0] && !loadvisible[1] && loadvisible[2])
+                    {
+                        if (loadvisible[0])
+                        {
+                            if (meiroInt[changeNextindexArray[0] - meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[0] - meiroNeighborhood] == 4)
+                            {
+                                returnIndex = changeNextindexArray[0];
+                                break;
+                            }
+                            else
+                            {
+                                returnIndex = nextIndex;
+                                break;
+                            }
+                        }
+                        else if (loadvisible[2])
+                        {
+                            if (meiroInt[changeNextindexArray[2] - meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[2] - meiroNeighborhood] == 4)
+                            {
+                                returnIndex = changeNextindexArray[2];
+                                break;
+                            }
+                            else
+                            {
+                                returnIndex = nextIndex;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (loadvisible[0] && loadvisible[1] && !loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[0] -meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[0] -meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[0];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && loadvisible[1] && loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[2] -meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[2] -meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[2];
+                            break;
+                        }
+
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+                    else if (loadvisible[0] && !loadvisible[1] && !loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[0] - meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[0] - meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[0];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+                    else if (!loadvisible[0] && !loadvisible[1] && loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[2] - meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[2] - meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[2];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && loadvisible[1] && !loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+
+                    }
+                    else if (!loadvisible[0] && !loadvisible[1] && !loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+                }
+
+                else if (goIndex == 1)
+                {
+                    if (loadvisible[0] && loadvisible[1] && loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+                    else if (loadvisible[0] && !loadvisible[1] && loadvisible[2])
+                    {
+                        if (loadvisible[0])
+                        {
+                            if (meiroInt[changeNextindexArray[0] +meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[0] +meiroNeighborhood] == 4)
+                            {
+                                returnIndex = changeNextindexArray[0];
+                                break;
+                            }
+                            else
+                            {
+                                returnIndex = nextIndex;
+                                break;
+                            }
+                        }
+                        else if (loadvisible[2])
+                        {
+                            if (meiroInt[changeNextindexArray[2] +meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[2] +meiroNeighborhood] == 4)
+                            {
+                                returnIndex = changeNextindexArray[2];
+                                break;
+                            }
+                            else
+                            {
+                                returnIndex = nextIndex;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (loadvisible[0] && loadvisible[1] && !loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[0] + meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[0] +meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[0];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && loadvisible[1] && loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[2] + meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[2] + meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[2];
+                            break;
+                        }
+
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (loadvisible[0] && !loadvisible[1] && !loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[0] + meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[0] + meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[0];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && !loadvisible[1] && loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[2] + meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[2] + meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[2];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && loadvisible[1] && !loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+
+                    }
+                    else if (!loadvisible[0] && !loadvisible[1] && !loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+                }
+                else if (goIndex == 2)
+                {
+                    if (loadvisible[0] && loadvisible[1] && loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+                    else if (loadvisible[0] && !loadvisible[1] && loadvisible[2])
+                    {
+                        if (loadvisible[0])
+                        {
+                            if (meiroInt[changeNextindexArray[0] - 1] == 3 || meiroInt[changeNextindexArray[0] - 1] == 4)
+                            {
+                                returnIndex = changeNextindexArray[0];
+                                break;
+                            }
+                            else
+                            {
+                                returnIndex = nextIndex;
+                                break;
+                            }
+                        }
+                        else if (loadvisible[2])
+                        {
+                            if (meiroInt[changeNextindexArray[2] - 1] == 3 || meiroInt[changeNextindexArray[2] - 1] == 4)
+                            {
+                                returnIndex = changeNextindexArray[2];
+                                break;
+                            }
+                            else
+                            {
+                                returnIndex = nextIndex;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+                    else if (loadvisible[0] && loadvisible[1] && !loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[0] -1] == 3 || meiroInt[changeNextindexArray[0] -1] == 4)
+                        {
+                            returnIndex = changeNextindexArray[0];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && loadvisible[1] && loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[2] -1] == 3 || meiroInt[changeNextindexArray[2] -1] == 4)
+                        {
+                            returnIndex = changeNextindexArray[2];
+                            break;
+                        }
+                    
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                else if (loadvisible[0] && !loadvisible[1] && !loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[0] + meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[0] + meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[0];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && !loadvisible[1] && loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[2] + meiroNeighborhood] == 3 || meiroInt[changeNextindexArray[2] + meiroNeighborhood] == 4)
+                        {
+                            returnIndex = changeNextindexArray[2];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+                    else if (!loadvisible[0] && loadvisible[1] &&!loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+
+                    }
+                    else if(!loadvisible[0] && !loadvisible[1] && !loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+                }
+
+                else if (goIndex == 3)
+                {
+                    if (loadvisible[0] && loadvisible[1] && loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+                    else if (loadvisible[0] && !loadvisible[1] && loadvisible[2])
+                    {
+                        if (loadvisible[0])
+                        {
+                            if (meiroInt[changeNextindexArray[0] + 1] == 3 || meiroInt[changeNextindexArray[0] + 1] == 4)
+                            {
+                                returnIndex = changeNextindexArray[0];
+                                break;
+                            }
+                            else
+                            {
+                                returnIndex = nextIndex;
+                                break;
+                            }
+                        }
+                        else if (loadvisible[2])
+                        {
+                            if (meiroInt[changeNextindexArray[2] + 1] == 3 || meiroInt[changeNextindexArray[2] + 1] == 4)
+                            {
+                                returnIndex = changeNextindexArray[2];
+                                break;
+                            }
+                            else
+                            {
+                                returnIndex = nextIndex;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (loadvisible[0] && loadvisible[1] && !loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[0] + 1] == 3 || meiroInt[changeNextindexArray[0] + 1] == 4)
+                        {
+                            returnIndex = changeNextindexArray[0];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && loadvisible[1] && loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[2] + 1] == 3 || meiroInt[changeNextindexArray[2] + 1] == 4)
+                        {
+                            returnIndex = changeNextindexArray[2];
+                            break;
+                        }
+                    
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+
+                    }
+
+                    else if (loadvisible[0] && !loadvisible[1] && !loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[0] + 1] == 3 || meiroInt[changeNextindexArray[0] + 1] == 4)
+                        {
+                            returnIndex = changeNextindexArray[0];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && !loadvisible[1] && loadvisible[2])
+                    {
+                        if (meiroInt[changeNextindexArray[2] + 1] == 3 || meiroInt[changeNextindexArray[2] + 1] == 4)
+                        {
+                            returnIndex = changeNextindexArray[2];
+                            break;
+                        }
+                        else
+                        {
+                            returnIndex = nextIndex;
+                            break;
+                        }
+                    }
+
+                    else if (!loadvisible[0] && loadvisible[1] && !loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+
+                    else if(!loadvisible[0] && !loadvisible[1] && !loadvisible[2])
+                    {
+                        returnIndex = nextIndex;
+                        break;
+                    }
+                }
+
+            }
