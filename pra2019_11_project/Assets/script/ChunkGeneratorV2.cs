@@ -38,6 +38,8 @@ public class ChunkGeneratorV2 : MonoBehaviour
 
     public ChunkData[,] mapData;
 
+    [SerializeField] GameController gameController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +50,8 @@ public class ChunkGeneratorV2 : MonoBehaviour
         CreateStage();
 
         DebugData();
+
+        gameController.GoReady();
     }
 
     private void ResetMapData()

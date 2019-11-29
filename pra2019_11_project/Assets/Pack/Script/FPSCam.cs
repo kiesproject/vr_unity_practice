@@ -14,6 +14,8 @@ public class FPSCam : MonoBehaviour {
 
     Vector3 MoveVector = Vector3.zero;
 
+    public bool MoveEneble = false;
+
     // Use this for initialization
     void Start () {
         Cursor.visible = false;
@@ -58,7 +60,18 @@ public class FPSCam : MonoBehaviour {
             }
         }
 
-        characterController.Move(transform.TransformDirection(MoveVector * Time.deltaTime));
+        Vector3 moveVector = Vector3.zero;
+
+        if (MoveEneble)
+        {
+            moveVector = transform.TransformDirection(MoveVector * Time.deltaTime);
+        }
+        else
+        {
+            moveVector = Vector3.zero;
+        }
+
         MoveVector.y -= Gravity * Time.deltaTime;
+        characterController.Move(moveVector);
     }
 }
