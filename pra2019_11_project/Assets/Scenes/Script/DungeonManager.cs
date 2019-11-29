@@ -30,7 +30,7 @@ public class DungeonManager : MonoBehaviour
 
     [Header("壁の高さ")]
     [SerializeField]
-    int WallHeght = 2;
+    int WallHeight = 2;
 
     const int wallID = 0;
     const int roomID = 1;
@@ -313,7 +313,7 @@ public class DungeonManager : MonoBehaviour
                 // 壁だった場合壁にする
                 if (Map[i, j] == wallID)
                 {
-                    for (int height = 0; height < WallHeght; height++)
+                    for (int height = 0; height < WallHeight; height++)
                     {
                         Instantiate(wall, new Vector3(i - MapWidth / 2, height + 1, j - MapHeight / 2), Quaternion.identity);
                     }
@@ -324,7 +324,7 @@ public class DungeonManager : MonoBehaviour
         // 外壁を作る
         for (int i = -1; i < MapHeight + 1; i++)
         {
-            for (int j = 0; j < WallHeght + 1; j++)
+            for (int j = 0; j < WallHeight + 1; j++)
             {
                 Instantiate(iron, new Vector3(-1 - MapWidth / 2, j, i - MapHeight / 2), Quaternion.identity);
                 Instantiate(iron, new Vector3(MapWidth - MapWidth / 2, j, i - MapHeight / 2), Quaternion.identity);
@@ -333,7 +333,7 @@ public class DungeonManager : MonoBehaviour
         }
         for (int i = -1; i < MapWidth; i++)
         {
-            for (int j = 0; j < WallHeght + 1; j++)
+            for (int j = 0; j < WallHeight + 1; j++)
             {
                 Instantiate(iron, new Vector3(i - MapWidth / 2, j, -1 - MapHeight / 2), Quaternion.identity);
                 Instantiate(iron, new Vector3(i - MapWidth / 2, j, MapHeight - MapHeight / 2), Quaternion.identity);
