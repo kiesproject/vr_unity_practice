@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public int score = 0; //取得したスコア
     private int Hscore = 0; //ハイスコア
+    [HideInInspector]
+    public static bool RScore = false;
 
     private int number = 0;
     private float time = 0.0f;
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*マウスカーソルをウィンドウから出さない
+        /*マウスカーソルをゲームウィンドウから出さない
         マウスカーソルが見えなくなるが、Escキーを押すと出てくる*/
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -40,6 +42,16 @@ public class GameManager : MonoBehaviour
         //前回までのハイスコアのロード
         Load();
         Hscore = save.Hscore_S;
+
+        //ハイスコアのリセット
+        if(RScore == true)
+        {
+            save.Hscore_S = 0;
+            Save();
+            Hscore = 0;
+            RScore = false;
+        }
+
         HScore.text = Hscore.ToString();
 
         //スコアの初期化

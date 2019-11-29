@@ -1949,6 +1949,11 @@ PrefabInstance:
       propertyPath: GameOver_A
       value: 
       objectReference: {fileID: 2101505792}
+    - target: {fileID: 2661752880400529402, guid: ea16e9d2ef249e549ab52019fd336295,
+        type: 3}
+      propertyPath: RScore
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea16e9d2ef249e549ab52019fd336295, type: 3}
 --- !u!1001 &3225717372307746405
