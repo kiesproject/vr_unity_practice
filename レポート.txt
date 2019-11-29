@@ -32,6 +32,8 @@ Scene‚ÌˆÚ“®‚ð—˜—p‚µ‚ÄAƒ^ƒCƒgƒ‹‰æ–ÊAƒQ[ƒ€‰æ–Ê‚ðì¬‚µ‚Ü‚µ‚½Bƒ^ƒCƒgƒ‹‰æ–Ê‚É‚Íƒ
 
 ‰æ–Ê‚â“G‚ªŒ©‚¦‚â‚·‚­AƒQ[ƒ€ƒvƒŒƒC‚ª‚â‚è‚â‚·‚­‚È‚é‚æ‚¤‚ÉADirectional Light‚ð2‚Â”z’u‚µ‚Ü‚µ‚½B
 
+ƒCƒ“ƒXƒyƒNƒ^[‚É"•\Ž¦‚µ‚½‚¢•Ï”"‚ÆA"•\Ž¦‚µ‚½‚­‚È‚¢•Ï”"‚ðˆÓŽ¯‚µAprivate‚âA[HideInInspector]‚ðŽg‚Á‚ÄA•\Ž¦A”ñ•\Ž¦‚ð•ª‚¯‚Ä‚¢‚Ü‚·B
+‚Ü‚½A“G‚ð“|‚µ‚½Žž‚ÌƒXƒRƒA‚âA“G‚ÌˆÚ“®‘¬“xAoŒ»•p“xAƒvƒŒƒCƒ„[‚ÌˆÚ“®‘¬“x‚È‚ÇA‚¢‚­‚Â‚©‚Ì—v‘f‚ÍƒCƒ“ƒXƒyƒNƒ^[‚Å‚¢‚¶‚ê‚é‚æ‚¤‚É‚È‚Á‚Ä‚¢‚Ü‚·B
 
 y‹ê˜J‚µ‚½“_z
 
@@ -40,9 +42,11 @@ Scene‚ÌˆÚ“®‚ð—˜—p‚µ‚ÄAƒ^ƒCƒgƒ‹‰æ–ÊAƒQ[ƒ€‰æ–Ê‚ðì¬‚µ‚Ü‚µ‚½Bƒ^ƒCƒgƒ‹‰æ–Ê‚É‚Íƒ
 EPlayer‚ÆƒJƒƒ‰‚ð•ª—£‚µ‚½‚½‚ßAƒJƒƒ‰‚ÌŠp“x‚ÆRay‚ÌŒü‚«‚ª‡‚í‚È‚¢B
 Eetc...
 
-’mŽ¯•s‘«‚Å”Y‚Þê–Ê‚ª‘½‚­A—lX‚È•Ç‚É“–‚½‚è‚Ü‚µ‚½B•Ç‚É“–‚½‚é‚½‚Ñ‚ÉƒCƒ“ƒ^[ƒlƒbƒg‚Å’²‚×‚½‚èAŽ¿–â‚µ‚½‚è‚µ‚Ü‚µ‚½B
+ã‹L‚Ì‚æ‚¤‚ÉA’mŽ¯•s‘«‚Å”Y‚Þê–Ê‚ª‘½‚­A—lX‚È•Ç‚É“–‚½‚è‚Ü‚µ‚½B•Ç‚É“–‚½‚é‚½‚Ñ‚ÉƒCƒ“ƒ^[ƒlƒbƒg‚Å’²‚×‚½‚èAŽ¿–â‚µ‚½‚è‚µ‚Ü‚µ‚½B
 Unity‚ðG‚éŽžŠÔ‚æ‚èA’²‚×‚Ä‚¢‚½ŽžŠÔ‚Ì•û‚ª’·‚©‚Á‚½‚ÆŽv‚¢‚Ü‚·B
 ‚Ü‚½AãŽè‚­‚¢‚©‚¸‚É‘Ã‹¦‚µ‚½•”•ª‚à‚ ‚èA¡Œã‚Ì‰Û‘è“_‚ª‘½‚¢‚Å‚·B
+
+Œø—¦“I‚ÈƒvƒƒOƒ‰ƒ€‚Ì‘‚«•û‚ª•ª‚©‚ç‚¸A•s—v‚È•”•ª‚ðí‚é‚È‚Ç‚ÌŠÈ’P‚È‚±‚Æ‚µ‚©‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B
 
 
 yŠæ’£‚Á‚½“_z
@@ -51,5 +55,5 @@ Unity‚ðG‚éŽžŠÔ‚æ‚èA’²‚×‚Ä‚¢‚½ŽžŠÔ‚Ì•û‚ª’·‚©‚Á‚½‚ÆŽv‚¢‚Ü‚·B
 E’m‚Á‚Ä‚¢‚é’mŽ¯‚Ì•œK‚ð‚µ‚Â‚ÂAV‚µ‚¢’mŽ¯‚ðg‚É’…‚¯‚é‚½‚ßA—lX‚È—v‘f‚ð’Ç‰Á‚µ‚Ä‚¢‚«‚Ü‚µ‚½B
 EƒQ[ƒ€‚Æ‚µ‚ÄŠy‚µ‚ß‚é‚æ‚¤‚ÉAƒnƒCƒXƒRƒA‹@”\‚ðŽÀ‘•‚µAŒJ‚è•Ô‚µ—V‚×‚é‚æ‚¤‚É‚µ‚Ü‚µ‚½B
 E‚Æ‚è‚ ‚¦‚¸‚ÍƒQ[ƒ€‚Æ‚µ‚Ä—V‚×‚é“à—e‚ÉŽdã‚°‚Ü‚µ‚½B
-
+EŒÂl“I‚ÉŽÀ‘•‚µ‚Ä‚Ý‚½‚¢‚ÆŽv‚Á‚Ä‚¢‚½‹@”\‚Í‘å‚Ü‚©‚ÉŽÀ‘•‚Å‚«‚½‚Ì‚ÅA–ž‘«‚µ‚Ä‚¢‚Ü‚·B‰Û‘è‚ÌŽ©—R“x‚ª‚‚­Aì‚é‚Ì‚ªŠy‚µ‚©‚Á‚½‚Å‚·B
 
