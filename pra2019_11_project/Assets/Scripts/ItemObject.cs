@@ -5,34 +5,70 @@ using UnityEngine;
 public class ItemObject : MonoBehaviour
 {
     public Item item;
-    public LayerMask mask;
-    private bool isMess = false;
-    private bool isMess_dump = false;
+    protected bool isMess = false;
+    protected bool isMess_dump = false;
+    [SerializeField]
+    private GameObject rootObject;
+
+    [SerializeField]
+    private Rigidbody box;
+
+    protected ThroughMassage tm;
+
 
     private void Start()
     {
-        item = new Gold();
+        //item = new Gold();
+        
     }
 
     private void Update()
     {
-        if (isMess_dump != isMess)
+        
+
+        if (GameManager.instance.throughMassage != null)
         {
+            if (tm == null) tm = GameManager.instance.throughMassage;
+
             if (isMess)
             {
-                GameManager.instance.player.culletTarget = this;
-                GameManager.instance.throughMassage.Call_Message("宝箱が置いてある…", "開ける");
+                if (tm.accese == null && !tm.onDisplay)
+                {
+                    GameManager.instance.player.culletTarget = this;
+                    tm.Call_Message("宝箱が置いてある…", "開ける");
+                    tm.accese = this;
 
+                }
             }
             else
             {
-                GameManager.instance.player.culletTarget = null;
-                GameManager.instance.throughMassage.Clear_Message();
-
+                if (tm.accese == this && tm.onDisplay)
+                {
+                    GameManager.instance.player.culletTarget = null;
+                    tm.Clear_Message();
+                    tm.accese = null;
+                }
             }
+            
         }
 
-        isMess_dump = isMess;
+        
+        //Debug.Log(string.Format("[ItemObject] 「{0}」 isMess : {1}", gameObject.name, isMess));
+    }
+
+    private void OnDestroy()
+    {
+        if (GameManager.instance.labyrinth.listBlock.Contains(gameObject))
+        {
+            GameManager.instance.labyrinth.listBlock.Remove(gameObject);
+        }
+
+        if (tm.accese == this && tm.onDisplay)
+        {
+            GameManager.instance.player.culletTarget = null;
+            tm.Clear_Message();
+            tm.accese = null;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -64,22 +100,48 @@ public class ItemObject : MonoBehaviour
 
     public void Get_Item()
     {
-        if (GameManager.instance.throughMassage != null)
+        Get_Item(true);
+    }
+
+    public virtual void Get_Item(bool destroy)
+    {
+        if (item != null)
         {
-            GameManager.instance.throughMassage.Call_MessageTime(string.Format("「{0}」を手に入れた。", item.NAME), 4f);
-            item.Get_Item();
-            Destroy(gameObject);
+            if (GameManager.instance.throughMassage != null)  
+            {
+
+                if (GameManager.instance.itemList.Count < GameManager.instance.itemCapa)
+                {
+                    GameManager.instance.throughMassage.Call_MessageTime(string.Format("「{0}」を手に入れた。", item.Name), 2f);
+
+                    item.Get_Item();
+                    if (destroy)
+                    {
+                        Destroy(rootObject);
+                        if (GameManager.instance.throughMassage.accese == this) GameManager.instance.throughMassage.accese = null;
+                    }
+                }
+                else
+                {
+                    GameManager.instance.throughMassage.Call_MessageTime("もうアイテムを持てない", 2f);
+                    GameManager.instance.throughMassage.accese = null;
+                }
+            }
         }
     }
 
-    public Item Create_Item<T>()
+    public void Create_Item<T>()
         where T : Item, new()
     {
         var item = new T();
+        //Debug.Log(item);
         var gm = GameManager.instance;
         item.Create(gm.luck, gm.unluck);
+        //Debug.Log(item.Name);
 
-        return item;
+        this.item = item;
     }
+
+    
 
 }

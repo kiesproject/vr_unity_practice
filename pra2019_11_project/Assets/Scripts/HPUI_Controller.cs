@@ -13,6 +13,14 @@ public class HPUI_Controller : MonoBehaviour
     private Text text;
     [SerializeField]
     private GameObject[] keySprite;
+    [SerializeField]
+    private Text textGold;
+    [SerializeField]
+    private Text textBullet;
+    [SerializeField]
+    private Text textWeapon;
+    [SerializeField]
+    private Text textArmor;
 
     private Player player;
     private float memo = 1;
@@ -28,6 +36,29 @@ public class HPUI_Controller : MonoBehaviour
     {
         if (player != null)
         {
+            textGold.text = GameManager.instance.golds.ToString() + "G";
+            textBullet.text = GameManager.instance.player.bullets.ToString() + "発";
+
+            if (player.weapon != null)
+            {
+                textWeapon.text = player.weapon.Name;
+            }
+            else
+            {
+                textWeapon.text = "装備なし";
+            }
+
+            if (player.armor != null)
+            {
+                textArmor.text = player.armor.Name;
+            }
+            else
+            {
+                textArmor.text = "装備なし";
+            }
+
+            //---- ---- ---- ----- ----- ---- --- ---- ---- ---- ----- -----
+
             KeyDisplay(GameManager.instance.Get_KeyState());
 
             //HP表示変更

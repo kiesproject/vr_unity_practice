@@ -21,21 +21,19 @@ public class ShootController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_camera != null)
+        if (GameManager.instance.state == GameManager.State.GAME)
         {
-            var pos = ScreenToWorld2();
-            hand.transform.LookAt(pos);
 
-            if (Input.GetMouseButtonDown(0) && !GameManager.instance.cursorOnUI)
+            if (_camera != null)
             {
-                sShoot.ShootFire(pos);
-            }
-        }
+                var pos = ScreenToWorld2();
+                hand.transform.LookAt(pos);
 
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            // 処理したい内容
-            Debug.Log("On uGUI");
+                if (Input.GetMouseButtonDown(0) && !GameManager.instance.cursorOnUI)
+                {
+                    sShoot.ShootFire(pos);
+                }
+            }
         }
     }
 

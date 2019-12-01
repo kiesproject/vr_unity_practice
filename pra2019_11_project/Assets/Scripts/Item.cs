@@ -5,21 +5,41 @@ using UnityEngine.UI;
 
 public class Item
 {
-    public string NAME = "謎のアイテム";
+    public string Name = "謎のアイテム";
+    public string Description = "詳細不明";
     public GameObject itemObject;
 
     public virtual void Naming()
     {
-        NAME = "謎のアイテム";
+        Name = "謎のアイテム";
     }
 
     public virtual void Get_Item()
     {
-
+        Debug.Log("素で実行されました");
     }
 
     public virtual void Create(float luck, float unluck)
     {
+        Debug.Log("素でItem生成されました");
+    }
+
+    public virtual void Use()
+    {
+
+    }
+
+    public virtual void Remove()
+    {
+        if (GameManager.instance.itemList.Contains(this))
+        {
+            GameManager.instance.itemList.Remove(this);
+        }
+    }
+
+    public virtual void Update_Desc()
+    {
+
 
     }
 }
@@ -69,7 +89,7 @@ public class Weapon : Item
             a += "最悪の";
         }
 
-        NAME = a + "ハンドガン";
+        Name = a + "ハンドガン";
     }
 
     public override void Get_Item()
@@ -90,6 +110,17 @@ public class Weapon : Item
         fireRate_p = Random.Range(0.7f - luck, 1.3f + unluck);
         Naming();
     }
+
+    public override void Use()
+    {
+        GameManager.instance.throughMassage.Call_MessageTime(string.Format("{0}を装備した", Name), 2f);
+        GameManager.instance.Set_Weapon(GameManager.instance.cursorInventory);
+    }
+
+    public override void Update_Desc()
+    {
+        Description = string.Format("射出力: {0}\n連射速度: {1}", bulletPowor_p * 100, fireRate_p * 100);
+    }
 }
 
 public class Armor : Item
@@ -98,30 +129,15 @@ public class Armor : Item
     public float add_res_knok_p = 1;
     public float add_speed_p = 1;
 
+    public override void Update_Desc()
+    {
+        Description = string.Format("防御力: {0}\n移動補正: {1}", add_resistance_p * 100, add_speed_p * 100);
+    }
+
     public override void Naming()
     {
         string a = "";
         string s = "";
-        if (1.5f <= add_res_knok_p && add_res_knok_p < 3.5f)
-        {
-            a += "重い";
-        }else if(3.5f <= add_res_knok_p)
-        {
-            a += "不動たる";
-        }
-        else if (-1.5f <= add_resistance_p && add_resistance_p < 0.0f)
-        {
-            s = "呪いアーマー";
-        }
-        else if (-2.5f <= add_resistance_p && add_resistance_p < -1.5f)
-        {
-            s = "災厄アーマー";
-        }
-        else if (add_resistance_p < -2.5f)
-        {
-            s = "滅亡アーマー";
-        }
-
 
         if (1.5f <= add_speed_p && add_speed_p < 2.5f)
         {
@@ -172,30 +188,24 @@ public class Armor : Item
             s = "滅亡アーマー";
         }
 
-        NAME = a + s;
+        Name = a + s;
     }
 
     public override void Create(float luck, float unluck)
     {
         add_resistance_p = Random.Range(0 - luck, 0.6f + unluck);
-        add_res_knok_p = Random.Range(0 - luck, 0.6f + unluck);
+        add_res_knok_p = Random.Range(0.3f, 1.5f);
         add_speed_p = Random.Range(0 - luck, 0.6f + unluck);
 
         if (add_resistance_p < 0)
         {
-            add_res_knok_p += Random.Range(0, Mathf.Abs(add_resistance_p) * (unluck + 1.0f));
+            //add_res_knok_p += Random.Range(0, Mathf.Abs(add_resistance_p) * (unluck + 1.0f));
             add_speed_p += Random.Range(0, Mathf.Abs(add_resistance_p) * (unluck + 1.0f));
-        }
-
-        if (add_res_knok_p < 0)
-        {
-            add_resistance_p += Random.Range(0, Mathf.Abs(add_res_knok_p) * (unluck + 1.0f));
-            add_speed_p += Random.Range(0, Mathf.Abs(add_res_knok_p) * (unluck + 1.0f));
         }
 
         if (add_speed_p < 0)
         {
-            add_res_knok_p += Random.Range(0, Mathf.Abs(add_speed_p) * (unluck + 1.0f));
+            //add_res_knok_p += Random.Range(0, Mathf.Abs(add_speed_p) * (unluck + 1.0f));
             add_resistance_p += Random.Range(0, Mathf.Abs(add_speed_p) * (unluck + 1.0f));
         }
 
@@ -213,6 +223,12 @@ public class Armor : Item
             }
         }
     }
+
+    public override void Use()
+    {
+        GameManager.instance.throughMassage.Call_MessageTime(string.Format("{0}を装備した", Name), 2f);
+        GameManager.instance.Set_Armor(GameManager.instance.cursorInventory);
+    }
 }
 
 public class Drink : Item
@@ -224,6 +240,11 @@ public class Drink : Item
     public int time = 0;
     public int timeAddResistance = 0;
     public int timeAddSpeed = 0;
+
+    public override void Update_Desc()
+    {
+        Description = string.Format("回復量: {0}\n移動強化: {1} 防御強化: {2}", heal, addSpeed, addResistance);
+    }
 
     public override void Naming()
     {
@@ -261,7 +282,7 @@ public class Drink : Item
         else if (20 <= d) { s= "極薬"; }
         else { s = "薬"; }
 
-        NAME = a + s;
+        Name = a + s;
     }
 
     public override void Create(float luck, float unluck)
@@ -294,6 +315,12 @@ public class Drink : Item
             }
         }
     }
+
+    public override void Use()
+    {
+        GameManager.instance.throughMassage.Call_MessageTime(string.Format("{0}を飲んだ", Name), 2f);
+        GameManager.instance.player.Drinking(this);
+    }
 }
 
 public class Gold : Item
@@ -303,13 +330,14 @@ public class Gold : Item
 
     public override void Naming()
     {
-        NAME = gold.ToString() + "G";
+        Name = gold.ToString() + "G";
     }
 
     public override void Create(float luck, float unluck)
     {
         gold = Random.Range(10 - (int)luck * 30, 100 + (int)unluck * 30);
         if (gold < 0) { addLuck = gold / 80; gold = 1; }
+        Naming();
     }
 
     public override void Get_Item()
@@ -329,6 +357,11 @@ public class Gold : Item
 
 public class Key : Item
 {
+    public override void Create(float luck, float unluck)
+    {
+        Name = "鍵";
+    }
+
     public override void Get_Item()
     {
         GameManager.instance.Add_Key(1);
@@ -339,6 +372,12 @@ public class Bullet : Item
 {
     public int number = 10;
 
+    public override void Create(float luck, float unluck)
+    {
+        number = Random.Range(1, 10) + 5;
+        Name = string.Format("{0}発の銃弾", number);
+    }
+
     public override void Get_Item()
     {
         GameManager.instance.player.bullets += number;
@@ -347,8 +386,26 @@ public class Bullet : Item
 
 public class Map : Item
 {
+    public override void Create(float luck, float unluck)
+    {
+        Name = "現在フロアのマップ";
+    }
+
     public override void Get_Item()
     {
         GameManager.instance.mapSystem.Set_MapRoomAll();
+    }
+}
+
+public class Goal : Item
+{
+    public override void Get_Item()
+    {
+        if (GameManager.instance.Get_KeyState() >= 3)
+        {
+            Debug.Log("転送を実行");
+            GameManager.instance.throughMassage.Clear_Message_F();
+            GameManager.instance.NextStage();
+        }
     }
 }

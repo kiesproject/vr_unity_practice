@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public State state = State.TITLE; //ゲームの状態
     public StageType stageType = StageType.FLAT; //迷路の種類
     public LayerMask BlockLayer; //ブロックのレイヤーマスク
+    [SerializeField]
     private int keyState = 0; //鍵の所持数
 
     // --- --- --- --- --- --- --- --- --- --- ---
@@ -16,17 +17,21 @@ public class GameManager : MonoBehaviour
     public Player player;
     public MapSystem mapSystem;
     public ThroughMassage throughMassage;
+    public BGeffect gbEffect;
     private const string stageName = "Stage";
     private Scene stageScene;
 
-    public bool cursorOnUI = false;
+    [HideInInspector] public bool cursorOnUI = false;
+    [HideInInspector] public int cursorInventory = 0;
 
     [HideInInspector] public List<Item> itemList;
     [HideInInspector] public int itemCapa = 5;
     [HideInInspector] public int golds = 0;
+    [HideInInspector] public int bullets = 10;
     [HideInInspector] public float luck = 0;
     [HideInInspector] public float unluck = 0;
-
+    [HideInInspector] public int currentFloor = 1;
+    public GameObject GameOver;
 
     public enum StageType
     {
@@ -51,26 +56,39 @@ public class GameManager : MonoBehaviour
 
         stageScene = SceneManager.GetSceneByName(stageName);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        //初期設定
         itemList = new List<Item>();
-        itemList.Add(new Weapon());
-        
+        var w = new Weapon() { Name = "最初のハンドガン" };
+        w.Update_Desc();
+        itemList.Add(w);
+        player.weapon = w;
+
 
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (labyrinth != null && stageType == StageType.LABYRINTH)
-        {
-            labyrinth.Create_Labyrinth();
-            Move_FirstPoss();
-        }
+        state = State.GAME;
+        Create_Labyrinth();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log("cursorOnUI :"+ cursorOnUI);
+    }
+
+    public void Create_Labyrinth()
+    {
+        if (labyrinth != null && stageType == StageType.LABYRINTH)
+        {
+            labyrinth.Create_Labyrinth();
+            
+            Move_FirstPoss();
+            labyrinth.Put_Enemy(6);
+        }
     }
 
     /// <summary>
@@ -173,4 +191,150 @@ public class GameManager : MonoBehaviour
     {
         return ((1 << layer) & layerMask) != 0;
     }
+
+    /// <summary>
+    /// 次のフロアへ
+    /// </summary>
+    public void NextStage()
+    {
+        StartCoroutine(IE_NextStage());
+
+    }
+
+    /// <summary>
+    /// 次のフロアへ
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator IE_NextStage()
+    {
+        state = State.LOAD;
+        throughMassage.accese = null;
+        gbEffect.gameObject.SetActive(true);
+        keyState = 0;
+        currentFloor++;
+
+        gbEffect.textF.text ="F" + currentFloor.ToString();
+        for (int i=0; i <= 36; i++)
+        {
+            yield return null;
+            gbEffect.E_BG_Effect(i*10, true);
+        }
+
+        for (int i=0; i<=5; i++)
+        {
+            yield return null;
+            gbEffect.E_Floor_Effect(i*20, true);
+        }
+
+        yield return new WaitForSeconds(2);
+
+        labyrinth.Clear_Labyrinth(); //迷宮データを削除する
+        Create_Labyrinth(); //迷宮データを作成する
+        mapSystem.Reset_Map(); //マップを初期化
+
+        for (int i = 0; i <= 5; i++)
+        {
+            yield return null;
+            gbEffect.E_Floor_Effect(i*20, false);
+        }
+
+        for (int i = 0; i <= 36; i++)
+        {
+            yield return null;
+            gbEffect.E_BG_Effect(i*10, false);
+        }
+
+        gbEffect.gameObject.SetActive(false);
+        state = State.GAME;
+    }
+
+    
+    /// <summary>
+    /// アイテムを取得する
+    /// </summary>
+    public void GetItem()
+    {
+        if (player != null)
+        {
+            if(player.culletTarget != null)
+            {
+
+                player.culletTarget.Get_Item();
+                cursorInventory = itemList.Count - 1;
+
+            }
+        }
+
+    }
+
+    public void Set_Weapon(int index)
+    {
+        if (player != null)
+        {
+            if (itemList[index].GetType() == typeof(Weapon))
+            {
+                player.weapon = itemList[index] as Weapon;
+            }
+        }
+    }
+
+    public void Set_Armor(int index)
+    {
+        if (player != null)
+        {
+            if (itemList[index].GetType() == typeof(Armor))
+            {
+                player.armor = itemList[index] as Armor;
+            }
+        }
+    }
+
+    /// <summary>
+    /// インベントリの参照番号を進める
+    /// </summary>
+    /// <param name="upDOWN"></param>
+    public void Scroll_Inventory(bool upDOWN)
+    {
+        if (upDOWN)
+        {
+            cursorInventory--;
+            if(cursorInventory < 0)
+            {
+                cursorInventory = itemList.Count - 1;
+            }
+        }
+        else
+        {
+            cursorInventory++;
+            if (cursorInventory > itemList.Count - 1)
+            {
+                cursorInventory = 0;
+            }
+        }
+        
+        
+    }
+
+    public void UseItem()
+    {
+        if (itemList.Count > 0)
+        {
+            itemList[cursorInventory].Use();
+
+            if (itemList[cursorInventory].GetType() == typeof(Drink)) ItemDelete();
+        }
+    }
+
+    public void ItemDelete()
+    {
+        if (itemList.Count > 0)
+        {
+            itemList.RemoveAt(cursorInventory);
+            if(itemList.Count-1 < cursorInventory)
+            {
+                cursorInventory = 0;
+            }
+        }
+    }
+
 }

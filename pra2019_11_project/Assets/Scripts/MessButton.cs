@@ -10,8 +10,8 @@ public class MessButton : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("押された!");  // ログを出力
-        GameManager.instance.throughMassage.pushBuntton = GameManager.instance.player.culletTarget;
+        //Debug.Log("押された!");  // ログを出力
+        GameManager.instance.GetItem();
     }
 
     private void Start()

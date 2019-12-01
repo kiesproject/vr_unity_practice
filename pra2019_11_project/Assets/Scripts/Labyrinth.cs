@@ -10,10 +10,16 @@ public class Labyrinth : MonoBehaviour
     [SerializeField]
     private GameObject[] floorPrefabs;
 
+    [SerializeField]
+    private GameObject[] itemPrefabs;
+
+    [SerializeField]
+    private GameObject[] enemyPrefabs;
+
     [SerializeField, Tooltip("ブロックのサイズ")]
     public Vector3 sizeBlock = new Vector3(1, 1, 1);
-
-
+    public List<GameObject> listBlock = new List<GameObject>();
+    
     //--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
     //===ダンジョン===
@@ -29,8 +35,6 @@ public class Labyrinth : MonoBehaviour
     //---
     private Rect originRect;            //根の矩形データ
     private bool isCreated = false;
-
-    public Dictionary<Vector2, int> itemMapList;
 
     /// <summary>
     /// 部屋データを取得する
@@ -75,6 +79,9 @@ public class Labyrinth : MonoBehaviour
     /// <param name="id"></param>
     private void Set_TileData(int x, int y, int id)
     {
+        //外核は上書きしない
+        if (x == 0 || y == 0 || y == vertical_size - 1 || x == horizontal_size - 1) return;
+
         Get_TileData(x, y).TileID = id;
     }
 
@@ -107,13 +114,29 @@ public class Labyrinth : MonoBehaviour
         {
             for(int j=0; sy + j + (-1 * y_ad) != ly; j += y_ad)
             {
-                Set_TileData(sx + i, sy + j, id);
-
+                
+                var data = Get_TileData(sx + i, sy + j);
+                if (data.TileID != 0)
+                {
+                    if (data.TileID != 1)
+                    {
+                        Set_TileData(sx + i, sy + j, data.TileID);
+                    }
+                    else
+                    {
+                        Set_TileData(sx + i, sy + j, 3);
+                    }
+                }
+                else
+                {
+                    Set_TileData(sx + i, sy + j, id);
+                }
             }
         }
 
     }
 
+    
     
 
     //====================================================
@@ -159,24 +182,24 @@ public class Labyrinth : MonoBehaviour
         return y * horizontal_size + x;
     }
 
-    public void Create_ItemMap()
+    private void Create_ItemMap()
     {
         if (isCreatedData())
         {
-            itemMapList = new Dictionary<Vector2, int>();
-
             //鍵
             for (int i=0; i < 3; i++)
             {
+                int q = 0;
                 while (true)
                 {
+                    if (1000 < ++q) { Debug.LogError("ループ数が異常です"); break; }
                     var room = listRooms[Random.Range(0, listRooms.Count)];
                     int x = Random.Range(1, room.width - 2);
                     int y = Random.Range(1, room.height - 2);
-
-                    if (!itemMapList.ContainsKey(new Vector2(x, y)))
+                    TileData data = Get_TileData(room.x + x, room.y + y);
+                    if (data.ItemID == 0)
                     {
-                        itemMapList.Add(new Vector2(x, y), 0);
+                        data.ItemID = 1;
                         break;
                     }
                     
@@ -186,50 +209,60 @@ public class Labyrinth : MonoBehaviour
             //地図
             if(Random.Range(0, 5) == 0)
             {
+                int q = 0;
                 while (true)
                 {
+                    if (1000 < ++q) { Debug.LogError("ループ数が異常です"); break; }
                     var room = listRooms[Random.Range(0, listRooms.Count)];
                     int x = Random.Range(1, room.width - 2);
                     int y = Random.Range(1, room.height - 2);
-
-                    if (!itemMapList.ContainsKey(new Vector2(x, y)))
+                    TileData data = Get_TileData(room.x + x, room.y + y);
+                    if (data.ItemID == 0)
                     {
-                        itemMapList.Add(new Vector2(x, y), 1);
+                        data.ItemID = 2;
                         break;
                     }
                 }
             }
 
-            //ゴール
-            while(true)
             {
-                var room = listRooms[Random.Range(0, listRooms.Count)];
-                int x = Random.Range(1, room.width - 2);
-                int y = Random.Range(1, room.height - 2);
-
-                if (!itemMapList.ContainsKey(new Vector2(x, y)))
+                int q = 0;
+                //ゴール
+                while (true)
                 {
-                    itemMapList.Add(new Vector2(x, y), 2);
-                    break;
+                    if (1000 < ++q) { Debug.LogError("ループ数が異常です"); break; }
+                    var room = listRooms[Random.Range(0, listRooms.Count)];
+                    int x = Random.Range(1, room.width - 2);
+                    int y = Random.Range(1, room.height - 2);
+                    TileData data = Get_TileData(room.x + x, room.y + y);
+                    if (data.ItemID == 0)
+                    {
+                        data.ItemID = 3;
+                        break;
+                    }
                 }
             }
 
             //アイテム
             foreach (var room in listRooms)
             {
+                int e = 0;
                 int p = 0;
                 if (Random.Range(0, 10) % 2 == 0) continue;
                 while (Random.Range(0, 100) + 1 > p)
                 {
-                    p += 50;
+                    if (1000 < ++e) { Debug.LogError("ループ数が異常です"); break; }
+                    p += 80;
+                    int q = 0;
                     while (true)
                     {
+                        if (1000 < ++q) { Debug.LogError("ループ数が異常です"); break; }
                         int x = Random.Range(1, room.width - 2);
                         int y = Random.Range(1, room.height - 2);
-
-                        if (!itemMapList.ContainsKey(new Vector2(x, y)))
+                        TileData data = Get_TileData(room.x + x,room.y + y);
+                        if (data.ItemID == 0)
                         {
-                            itemMapList.Add(new Vector2(x, y), 5);
+                            data.ItemID = 4;
                             break;
                         }
                     }
@@ -237,6 +270,8 @@ public class Labyrinth : MonoBehaviour
             }
 
         }
+
+        return;
 
     }
 
@@ -356,6 +391,7 @@ public class Labyrinth : MonoBehaviour
                     case 1:
                         {
                             var o = Instantiate(blockPrefabs[0], new Vector3(i, 0, j), blockPrefabs[0].transform.rotation);
+                            listBlock.Add(o);
                             GameManager.instance.Move_ObjectToScene(o);
                         }
                         break;
@@ -364,6 +400,7 @@ public class Labyrinth : MonoBehaviour
                     case 4:
                         {
                             var o = Instantiate(floorPrefabs[0], new Vector3(i, -0.5f, j), floorPrefabs[0].transform.rotation);
+                            listBlock.Add(o);
                             GameManager.instance.Move_ObjectToScene(o);
                         }
                         break;
@@ -375,6 +412,110 @@ public class Labyrinth : MonoBehaviour
             }
         }
     }
+
+    private void Put_ItemObject()
+    {
+        for (int j = 0; j < vertical_size - 1; j++)
+        {
+            for (int i = 0; i < horizontal_size - 1; i++)
+            {
+                var id = Get_TileData(i, j).ItemID;
+                
+                switch (id)
+                {
+                    case 1:
+                        {
+                            var o = Instantiate(itemPrefabs[0], new Vector3(i, 0.5f, j), itemPrefabs[0].transform.rotation).GetComponent<ItemObject_via>();
+                            listBlock.Add(o.gameObject);
+                            var item = o.ItemObject;
+                            item.Create_Item<Key>();
+                        }
+                        break;
+                    case 2:
+                        {
+                            var o = Instantiate(itemPrefabs[0], new Vector3(i, 0.5f, j), itemPrefabs[0].transform.rotation).GetComponent<ItemObject_via>();
+                            listBlock.Add(o.gameObject);
+                            var item = o.ItemObject;
+                            item.Create_Item<Map>();
+
+                        }
+                        break;
+                    case 3:
+                        {
+                            var o = Instantiate(itemPrefabs[1], new Vector3(i, 0.3f, j), itemPrefabs[1].transform.rotation).GetComponent<ItemObject_via>();
+                            listBlock.Add(o.gameObject);
+                            var item = o.ItemObject;
+                            item.Create_Item<Goal>();
+
+                        }
+                        break;
+                    case 4:
+                        {
+                            var o = Instantiate(itemPrefabs[0], new Vector3(i, 0.5f, j), itemPrefabs[0].transform.rotation).GetComponent<ItemObject_via>();
+                            listBlock.Add(o.gameObject);
+                            var item = o.ItemObject;
+                            switch(Random.Range(0, 5))
+                            {
+                                case 0:
+                                    item.Create_Item<Weapon>();
+                                    break;
+                                case 1:
+                                    item.Create_Item<Armor>();
+                                    break;
+                                case 2:
+                                    item.Create_Item<Drink>();
+                                    break;
+                                case 3:
+                                    item.Create_Item<Gold>();
+                                    break;
+                                case 4:
+                                    item.Create_Item<Bullet>();
+                                    break;
+                            }
+                        }
+                        break;
+                }
+
+            }
+        }
+
+    }
+
+    public void Put_Enemy(int range)
+    {
+        var player = GameManager.instance.Get_PlayerPossToMap();
+        var list = new List<Vector2>();
+
+        for (int j = 0; j < vertical_size - 1; j++)
+        {
+            for (int i = 0; i < horizontal_size - 1; i++)
+            {
+                if ((player.x -range < i && i < player.x + range) && (player.y-range < j && j < player.y + range))
+                {
+                }
+                else
+                {
+                    var id = Get_TileData(i, j).TileID;
+                    if (id == 2 || id == 4)
+                    {
+                        list.Add(new Vector2(i, j));
+                    }
+                }
+
+
+            }
+            
+        }
+
+        for(int i=0; i < 10 + 10*(GameManager.instance.luck - GameManager.instance.unluck); i++)
+        {
+            int rnd = Random.Range(0, list.Count);
+            var o = Instantiate(enemyPrefabs[0], new Vector3(list[rnd].x, 0.04f, list[rnd].y), enemyPrefabs[0].transform.rotation);
+            listBlock.Add(o);
+        }
+
+    }
+
 
 
     //  ◇=========================================================◇
@@ -422,9 +563,12 @@ public class Labyrinth : MonoBehaviour
         FixRoutingList(ref routeData); //ルート関係情報を修正する
         Create_Route(routeData); //通路作成
         Put_TileTrace(); //タイルマップを元にブロックを配置
+
         Create_ItemMap(); //アイテムマップを作成  
+        Put_ItemObject(); //アイテムマップを元に配置
 
         Test_TileMap();
+        Test_ItemMap();
     }
 
     /// <summary>
@@ -961,6 +1105,21 @@ public class Labyrinth : MonoBehaviour
 
     }
 
+    public void Clear_Labyrinth()
+    {
+        listRooms.Clear();
+        tileDate = null;
+        originRect = null;
+        isCreated = false;
+
+        foreach(var o in listBlock)
+        {
+            Destroy(o);
+        }
+        listBlock.Clear();
+
+    }
+
     /// <summary>
     /// タイルマップを出力する
     /// </summary>
@@ -980,6 +1139,23 @@ public class Labyrinth : MonoBehaviour
 
         Debug.Log("「タイルマップ」\n" + ss);
     }
+
+    private void Test_ItemMap()
+    {
+        string ss = "";
+        for (int i = 0; i < horizontal_size - 1; i++)
+        {
+            string s = "";
+            for (int j = 0; j < vertical_size - 1; j++)
+            {
+                //Debug.Log(string.Format("x: {0}, y: {1}", j, i));
+                s += Get_TileData(j, i).ItemID.ToString();
+            }
+            ss += (s + "\n");
+        }
+
+        Debug.Log("「アイテムマップ」\n" + ss);
+    }
 }
 
 /// <summary>
@@ -995,7 +1171,7 @@ public class TileData
         4: 通路
     */
     public int TileID = 0;
-    public int BlockID = 0;
+    public int ItemID = 0;
 }
 
 public class RoomData : Rect
@@ -1026,14 +1202,14 @@ public class RoomData : Rect
 
 public class Labyrinth_Config
 {
-    public int time_gene = 30;
+    public int time_gene = 10;
     public int x_size_laby = 50;
     public int y_size_laby = 50;
-    public int x_size_minRect = 9;
-    public int y_size_minRect = 9;
+    public int x_size_minRect = 12;
+    public int y_size_minRect = 12;
 
-    public int x_min_room = 6;
-    public int y_min_room = 6;
+    public int x_min_room = 8;
+    public int y_min_room = 8;
 
     public int route_addRate = 70;
 

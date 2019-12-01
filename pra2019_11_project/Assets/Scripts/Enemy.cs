@@ -8,7 +8,9 @@ public class Enemy : MonoBehaviour, IButtle
     int hp = 25;
     int max_hp = 25;
     bool isDead = false;
-    int damage = 5;
+    int damage = 10;
+
+    public float speed = 10;
 
     private Rigidbody rig;
     [SerializeField]
@@ -30,12 +32,13 @@ public class Enemy : MonoBehaviour, IButtle
         if (isDead) return;
         if (GameManager.instance.player == null) return;
 
-        if (Check_RoundPlayer())
+        //if (Check_RoundPlayer())
         {
+            Debug.Log("追う");
             Chase(GameManager.instance.player.transform.position);
         }
 
-        Debug.Log(string.Format("HP: {0} MAX_HP: {1}", HP(), MAX_HP()));
+        //Debug.Log(string.Format("HP: {0} MAX_HP: {1}", HP(), MAX_HP()));
     }
 
     private void Chase(Vector3 target)
@@ -45,7 +48,7 @@ public class Enemy : MonoBehaviour, IButtle
             var moveV = (target - transform.position);
             var moveV_n = new Vector3(moveV.x, 0, moveV.z).normalized ;
             //Debug.Log(string.Format("moveV: {0} moveV_n: {1}", moveV, moveV_n));
-            rig.velocity = moveV_n * (1 + (level - 1) * 0.1f);
+            rig.velocity = speed * moveV_n * (1 + (level - 1) * 0.1f);
         }
     }
 
@@ -104,7 +107,7 @@ public class Enemy : MonoBehaviour, IButtle
         //ノックバックは行わない
     }
 
-    private void OnCollisionEnter(Collision c)
+    private void OnCollisionStay(Collision c)
     {
         if (GameManager.CompareLayer(layer, c.collider.gameObject.layer))
         {

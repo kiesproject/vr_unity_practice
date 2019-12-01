@@ -20,6 +20,7 @@ public class MapSystem : MonoBehaviour
     private Labyrinth labyrinth;
 
     private List<int> tileList = new List<int>();
+    private List<GameObject> listObject = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -48,10 +49,10 @@ public class MapSystem : MonoBehaviour
             tileList.Add(x + labyrinth.horizontal_size * y);
             var c = new Color(color.r, color.g, color.b, aColor);
             GameObject o = Instantiate(tile, Vector3.zero, Quaternion.identity);
+            listObject.Add(o);
+
             o.transform.parent = this.transform;
             (o.transform as RectTransform).localPosition = new Vector3(startPoss.x - x * sizeTile.x, startPoss.y - y * sizeTile.y, 0);
-            //(o.transform as RectTransform).anchoredPosition = new Vector3(startPoss.x - x * sizeTile.x, startPoss.y - y * sizeTile.y, 0);
-            //Debug.Log((o.transform as RectTransform).localPosition);
             
             o.GetComponent<Image>().color = c;
         }
@@ -68,7 +69,23 @@ public class MapSystem : MonoBehaviour
                 switch(labyrinth.Get_TileData(i, j).TileID)
                 {
                     case 2:
-                        Set_MapTile(i, j, Color.blue);
+                        TileData data = labyrinth.Get_TileData(i, j);
+                        if (data.ItemID == 1)
+                        {
+                            Set_MapTile(i, j, Color.yellow);
+                        }
+                        else if (data.ItemID == 2 || data.ItemID == 4)
+                        {
+                            Set_MapTile(i, j, Color.cyan);
+                        }
+                        else if (data.ItemID == 3)
+                        {
+                            Set_MapTile(i, j, Color.green);
+                        }
+                        else
+                        {
+                            Set_MapTile(i, j, Color.blue);
+                        }
                         break;
                     case 3:
                         Set_MapTile(i, j, Color.grey);
@@ -79,36 +96,30 @@ public class MapSystem : MonoBehaviour
                     default:
                         break;
                 }
-
-                if (labyrinth.itemMapList[new Vector2(i, j)] == 0)
-                {
-                    Set_MapTile(i, j, Color.yellow);
-                }
-                else if (labyrinth.itemMapList[new Vector2(i, j)] == 2)
-                {
-                    Set_MapTile(i, j, Color.green);
-                }
             }
         }
     }
 
     void Set_MapRoom(int x, int y, Color color)
     {
-        if (labyrinth.itemMapList.ContainsKey(new Vector2(x, y)))
+        TileData data = labyrinth.Get_TileData(x, y);
+        if (data.ItemID == 1)
         {
-            if (labyrinth.itemMapList[new Vector2(x, y)] == 0)
-            {
-                Set_MapTile(x, y, Color.yellow);
-            }
-            else if (labyrinth.itemMapList[new Vector2(x, y)] == 2)
-            {
-                Set_MapTile(x, y, Color.green);
-            }
-            else
-            {
-                Set_MapTile(x, y, color);
-            }
+            Set_MapTile(x, y, Color.yellow);
         }
+        else if (data.ItemID == 2 || data.ItemID == 4)
+        {
+            Set_MapTile(x, y, Color.cyan);
+        }
+        else if (data.ItemID == 3)
+        {
+            Set_MapTile(x, y, Color.green);
+        }
+        else
+        {
+            Set_MapTile(x, y, color);
+        }
+
 
         Vector2[] dir =
         {
@@ -172,5 +183,15 @@ public class MapSystem : MonoBehaviour
                 startPoss.x - poss.x * sizeTile.x, 
                 startPoss.y - poss.y * sizeTile.y, 
                 playerTile.transform.localPosition.z);
+    }
+
+    public void Reset_Map()
+    {
+        tileList.Clear();
+        foreach(var o in listObject)
+        {
+            Destroy(o);
+        }
+
     }
 }
