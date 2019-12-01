@@ -39,6 +39,7 @@ public class MazeGenerator : MonoBehaviour
                 //生成したオブジェクトに番号の名前をつける
                 copy.name = vi + "-" + hi.ToString();
             }
+
         }
 
         //ランダムな数字を縦横分の2つ出す
@@ -49,8 +50,6 @@ public class MazeGenerator : MonoBehaviour
         //ランダムな数字からオブジェクトを検索してDestroyで消す
         GameObject start = GameObject.Find(ver1 + "-" + hor1);
         Destroy(start);
-        //その位置をコンソールに表示
-        Debug.Log(start);
 
         //Minerを生成
         GameObject minerObj = Instantiate(miner, Vector3.zero, Quaternion.identity);
@@ -58,5 +57,18 @@ public class MazeGenerator : MonoBehaviour
         Miner minerScr = minerObj.GetComponent<Miner>();
         //MinerスクリプトのMining関数に引数を送って実行させる
         minerScr.DoMining(ver1, hor1);
+
+        //Walkerオブジェクト検索しWalkerスクリプトを取得、
+        //そしてReceive関数に引数を送って実行する
+        GameObject walker = GameObject.Find("Main Camera");
+        Walker walkerScr = walker.GetComponent<Walker>();
+        walkerScr.Receive(ver1, hor1);
+
+        //Walkerオブジェクト検索しWalkerスクリプトを取得、
+        //そしてReceive関数に引数を送って実行する
+        GameObject item = GameObject.Find("Item");
+        Item itemScr = item.GetComponent<Item>();
+        itemScr.Receive(ver1, hor1);
     }
+
 }
