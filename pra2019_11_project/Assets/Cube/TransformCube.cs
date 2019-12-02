@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TransformCube : MonoBehaviour
 {
+    //*** これらの変数はVector3型でまとめると可読性が上がるでしょう
+    //***↓
+
     public float posx1 = 0f;
     public float posy1 = 0f;
     public float posz1 = 0f;
