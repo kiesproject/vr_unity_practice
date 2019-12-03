@@ -67,6 +67,7 @@ public class MeiroGeneraterSquare : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.SetMeiro(this);
         //StartCoroutine(Generater());
         Generater();
 
@@ -718,11 +719,13 @@ public class MeiroGeneraterSquare : MonoBehaviour
                 cloneObject = GameObject.Instantiate(games[meiroInt[i]], new Vector3(x, 0, z), Quaternion.identity);
             }
             cloneObject.GetComponent<MeiroObjectID>().SetID(i);
+            cloneObject.GetComponent<MeiroObjectID>().SetMeiroID(meiroInt[i]);
             //Player追加
             if (meiroInt[i] == 1)
             {
                 GameManager.instance.GetPlayer().transform.position = cloneObject.transform.position+new Vector3(0,1,0);
                 GameManager.instance.GetPlayer().GetComponent<MeiroObjectID>().SetID(i);
+                GameManager.instance.GetPlayer().GetComponent<MeiroObjectID>().SetMeiroID(5);
             }
             cloneObject.transform.parent= parentLbrynth.transform;
             

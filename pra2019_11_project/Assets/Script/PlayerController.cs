@@ -16,7 +16,7 @@ public class PlayerController : CharacterController
     // Update is called once per frame
     void Update()
     {
-        
+        Koudou();
     }
 
     private void Koudou()
@@ -29,10 +29,21 @@ public class PlayerController : CharacterController
 
             case 1:
                 Move();
-                GameManager.instance.SetPlayerKoudou(0);
                 break;
             case 2:
                 SelectComand();
+                GameManager.instance.SetPlayerKoudou(0);
+                break;
+            case 3:
+                SetNowIndex();
+                Map();
+                GameManager.instance.SetPlayerKoudou(0);
+                break;
+            case 4:
+                SetNowIndex();
+                GetComand();
+                GetComandTransform();
+                Map();
                 GameManager.instance.SetPlayerKoudou(0);
                 break;
         }

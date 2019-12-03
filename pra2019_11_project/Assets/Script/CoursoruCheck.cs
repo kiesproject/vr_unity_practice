@@ -7,6 +7,8 @@ public class CoursoruCheck : MonoBehaviour
     //MainCameraに付ける
     public string tagname = "Plane";
     public string tagname1 = "Finish";
+    public string tagname2 = "Enemy";
+    public string tagname3 = "Player";
     private GameObject Player;
     private Ray ray;
     private RaycastHit hit_info;
@@ -34,30 +36,26 @@ public class CoursoruCheck : MonoBehaviour
             if ((hit_info.transform.tag == tagname || hit_info.transform.tag == tagname1)&&setNeigborTrue)
             {
                 hit_info.transform.GetComponent<PlaneCoursoru>().SetPointCoursoru();
-                
+                if (Input.GetMouseButtonUp(0))
+                {
+                    GameManager.instance.GetPlayer().GetComponent<PlayerController>().SetFinalIndex(hit_info.transform.GetComponent<MeiroObjectID>().GetID());
+                    GameManager.instance.SetPlayerKoudou(1);
+                    GameManager.instance.GetPlayer().GetComponent<PlayerController>().NowPosition(GameManager.instance.GetPlayer().transform.position);
+                    GameManager.instance.GetPlayer().GetComponent<PlayerController>().NowRotation(GameManager.instance.GetPlayer().transform.rotation);
+                }
 
             }
-        }
-    }
-
-    private void OnMouseDown()
-    {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        hit_info = new RaycastHit();
-        max_distance = 100f;
-
-        bool is_hit = Physics.Raycast(ray, out hit_info, max_distance);
-        if (is_hit)
-        {
-            PlayerNeibordObjectChack();
-            if ((hit_info.transform.tag == tagname || hit_info.transform.tag == tagname1) && setNeigborTrue)
+            else if (hit_info.transform.tag == tagname2&&setNeigborTrue)
             {
-                GameManager.instance.SetPlayerKoudou(1);
-
-
+                hit_info.transform.GetComponent<PlaneCoursoru>().SetAttackCoursoru();
+                if (Input.GetMouseButtonUp(0))
+                {
+                    GameManager.instance.SetPlayerKoudou(2);
+                }
             }
         }
     }
+
 
     private void PlayerNeibordObjectChack()
     {

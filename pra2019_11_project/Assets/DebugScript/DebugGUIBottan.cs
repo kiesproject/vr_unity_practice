@@ -9,6 +9,7 @@ public class DebugGUIBottan : MonoBehaviour
     public void OnClick()
     {
         Generate.GetComponent<MeiroGeneraterSquare>().GeneratPublic();
+        GameManager.instance.SetPlayerKoudou(4);
 
     }
 }

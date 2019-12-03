@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int start, goal;
     [SerializeField] private bool Meirokansei;
     [SerializeField] private int PlayerKoudou;
+    [SerializeField] private MeiroGeneraterSquare meiro;
     private int[] meiroInt;
     public static GameManager instance;
 
@@ -103,5 +104,29 @@ public class GameManager : MonoBehaviour
     public int GetPlayerKoudou()
     {
         return PlayerKoudou;
+    }
+
+    public GameObject[] GetEnemyObject()
+    {
+        return enemy;
+    }
+    public void SetSpace(int[][] vs)
+    {
+        spaceInt = vs;
+    }
+
+    public int[][] GetSpace()
+    {
+        return spaceInt;
+    }
+
+    public void SetMeiro(MeiroGeneraterSquare a)
+    {
+        meiro = a;
+    }
+
+    public MeiroGeneraterSquare GetMeiro()
+    {
+        return meiro;
     }
 }

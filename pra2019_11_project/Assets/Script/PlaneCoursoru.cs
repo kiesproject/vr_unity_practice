@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlaneCoursoru : MonoBehaviour
 {
     public GameObject Coursoru;
-    private bool coursoru=false;
+    public GameObject AttackCoursoru;
+    private bool coursoru=false,attackCoursoru=false;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,19 +16,26 @@ public class PlaneCoursoru : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (coursoru)
+        if (coursoru||attackCoursoru)
         {
-            Coursoru.SetActive(true);
+            Coursoru.SetActive(coursoru);
+            AttackCoursoru.SetActive(attackCoursoru);
         }
         else
         {
-            Coursoru.SetActive(false);
+            Coursoru.SetActive(coursoru);
+            AttackCoursoru.SetActive(attackCoursoru);
         }
         coursoru = false;
+        attackCoursoru = false;
     }
 
     public void SetPointCoursoru()
     {
         coursoru = true;
+    }
+    public void SetAttackCoursoru()
+    {
+        attackCoursoru = true;
     }
 }

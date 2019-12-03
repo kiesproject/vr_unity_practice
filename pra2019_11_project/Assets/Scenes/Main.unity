@@ -1795,6 +1795,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagname: Plane
   tagname1: Finish
+  tagname2: Enemy
+  tagname3: Player
 --- !u!1 &913302108
 GameObject:
   m_ObjectHideFlags: 0
@@ -2845,11 +2847,12 @@ MonoBehaviour:
   spaceMax: 9
   spaceMin: 4
   player: {fileID: 1960174696}
-  enemy: []
+  enemy:
+  - {fileID: 7156179386581132244, guid: 5e042ac1277a18a41a09f1c220b16ddb, type: 3}
   labyrinthObject:
   - {fileID: 2573072070098258916, guid: 2c2d29bd70cc19f4cbd2a53647e5c6c8, type: 3}
   - {fileID: 190244422701429830, guid: 063e822cfd064934e9573470517bfba3, type: 3}
-  - {fileID: 3160416851591007243, guid: cf84f57e886ac0d4ebb15af7a3cbc628, type: 3}
+  - {fileID: 3862325192910999721, guid: cf84f57e886ac0d4ebb15af7a3cbc628, type: 3}
   - {fileID: 190244422701429830, guid: 063e822cfd064934e9573470517bfba3, type: 3}
   - {fileID: 190244422701429830, guid: 063e822cfd064934e9573470517bfba3, type: 3}
   mgs: {fileID: 5199876}
@@ -2857,6 +2860,8 @@ MonoBehaviour:
   start: 0
   goal: 0
   Meirokansei: 0
+  PlayerKoudou: 0
+  meiro: {fileID: 0}
 --- !u!4 &1226298736
 Transform:
   m_ObjectHideFlags: 0
@@ -4410,6 +4415,7 @@ MonoBehaviour:
   - {fileID: 1882011333}
   - {fileID: 2086125216}
   - {fileID: 967130654}
+  speed: 3
 --- !u!114 &1960174698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4422,6 +4428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb249af4e761e14d9c36a7730bdd5ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  MeiroID: 0
 --- !u!4 &1960174699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: cee0f2b977960904fa7da8182e69a2ea,
@@ -4511,6 +4519,11 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: cee0f2b977960904fa7da8182e69a2ea,
         type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: cee0f2b977960904fa7da8182e69a2ea,
+        type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cee0f2b977960904fa7da8182e69a2ea,
