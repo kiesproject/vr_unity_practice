@@ -8,16 +8,6 @@ public class DoorController : MonoBehaviour
     Transform wallTransform;
     [SerializeField]string colisionObj;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-       
-    }
-
     void OnTriggerEnter(Collider collider)
     {
         wallTransform = this.transform;
@@ -27,7 +17,6 @@ public class DoorController : MonoBehaviour
         {
             doorPos.z += 1.48f;
             wallTransform.position = doorPos;
-            Debug.Log("入った");
         }
         
     }
@@ -40,7 +29,6 @@ public class DoorController : MonoBehaviour
         {
             doorPos.z -= 1.48f;
             wallTransform.position = doorPos;
-            Debug.Log("出た");
         }
     }
 }

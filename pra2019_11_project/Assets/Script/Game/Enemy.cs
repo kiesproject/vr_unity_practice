@@ -1,33 +1,46 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Enemy : MonoBehaviour
 {
-    [SerializeField]public float speed = 1f;
-    [SerializeField]public Vector3 playerPos;
+    [SerializeField] public float speed = 2.5f;
+    [SerializeField] public Vector3 playerPos;
     [SerializeField] public Vector3 enemyPos;
     public GameObject player;
     public Transform playerTransform;
     public Transform enemyTransform;
-    public float length;
-    Vector3 diff;
+    public float length = 10;
+    private bool playerCol;
+    [SerializeField] public Rigidbody rb;
 
     void Start()
     {
         enemyTransform = this.gameObject.GetComponent<Transform>();
         playerTransform = player.gameObject.GetComponent<Transform>();
+        playerCol = false;
+        rb = this.gameObject.GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        enemyPos = enemyTransform.position;
-        playerPos = playerTransform.position;
-        diff = playerPos - enemyPos;
+        enemyPos = enemyTransform.position;                             //Enemyの座標取得
+        playerPos = playerTransform.position;                           //Playerの座標取得
+
+        if(playerCol == true)
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
         if (Vector3.Distance(playerPos, enemyPos) <= length)             //Vector3.Distance(a,b)でa,b間の距離
         {
-            transform.LookAt(diff);
-            enemyTransform.position = diff;
+            this.transform.LookAt(playerPos);
+            rb.velocity = transform.forward * speed;
         }
+        else
+        {
+            Vector3 randomPos  = new Vector3(UnityEngine.Random.Range(-30.0f,30.0f),0, UnityEngine.Random.Range(-30.0f, 30.0f));
+            this.transform.LookAt(randomPos);
+            rb.velocity = transform.forward * speed;
+        }
+        
     }
 
     //衝突時の判定
@@ -35,15 +48,15 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            Debug.Log("当たった");
-            SceneManager.LoadScene("GameOverScene");
+            playerCol = true;
         }
-        else if (collision.gameObject.name != "Player" && enemyTransform.position.y<=0.68f)
+        if (collision.gameObject.name == "Wall")
         {
-            Debug.Log(collision.gameObject.name);
             Quaternion enemyRot = Quaternion.Inverse(enemyTransform.rotation);
             enemyTransform.rotation = enemyRot;
+            rb.velocity = transform.forward * speed;
         }
     }
+    
 }
 

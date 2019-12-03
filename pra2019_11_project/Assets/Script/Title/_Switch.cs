@@ -14,12 +14,12 @@ public class _Switch : MonoBehaviour
         //ここに処理を書く
         lightObj.SetActive(false);
         //1フレーム停止
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         //ここに再開後の処理を書く
         StartCoroutine("ImageSwitch2");
     }
-    IEnumerable ImageSwitch2()
+    IEnumerator ImageSwitch2()
     {
         lightObj.SetActive(true);
         yield return new WaitForSeconds(3);
