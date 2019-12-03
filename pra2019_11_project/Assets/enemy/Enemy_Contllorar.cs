@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy_Contllorar : MonoBehaviour
 {
+    //*** ===============================================================
+    //***  使われていませんがよく出来ていると思います!!
+    //*** ===============================================================
+
     public float moveSpeed = 1.0f;          // 移動速度
     public float moveDuration = 1.0f;       // 動作の継続時間
     public float moveDirection = 0;         // 移動方向　0…左　1…右

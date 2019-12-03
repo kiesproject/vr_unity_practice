@@ -14,8 +14,10 @@ public class Homing : MonoBehaviour
 
     private void Update()
     {
+        //*** 
+
         m_velocity += (m_target.position - transform.position * m_speed2) * m_speed;
         m_velocity *= m_attenuation;
-        transform.position += m_velocity *= Time.deltaTime;
+        transform.position += m_velocity *= Time.deltaTime; //*** なかなかトリッキーな書き方ですねえ、悪くないです
     }
 }

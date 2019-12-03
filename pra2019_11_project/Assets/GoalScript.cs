@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GoalScript : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     // ゴール時に表示するText
     public GameObject goalText;
 

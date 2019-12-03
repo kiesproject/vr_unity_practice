@@ -9,7 +9,7 @@ public class JumpScript : MonoBehaviour
     //　速度
     private Vector3 velocity;
     //　ジャンプ力
-    [SerializeField]
+    [SerializeField] //***[SerializeField] と publicの使い分けが出来ているのは良いですね
     private float jumpPower = 5f;
 
     //Rigidbodyを変数に入れる
@@ -39,8 +39,12 @@ public class JumpScript : MonoBehaviour
        
     }
 
+    //*** ====================================================================================================================
+    //*** [改善]GetInputKey()は必要ないですかね？　意図しない動作を防ぐために使わないコードはコメントか消した方がいいでしょう。
+    //***       一旦外しておくだけならUpdate()からは抜いて置いた方がいいですね。
+    //*** ====================================================================================================================
 
-    void GetInputKey()
+    void GetInputKey() //*** <これは必要ない？>　
     {
         //A・Dキー、←→キーで横移動
         float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
@@ -77,6 +81,10 @@ public class JumpScript : MonoBehaviour
 
         //現在の位置＋入力した数値の場所に移動する
         rb.MovePosition(transform.position + new Vector3(Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed, 0, Input.GetAxisRaw("Vertical") * Time.deltaTime * speed));
+
+        //*** ====================================================================================================================
+        //*** [改善]ここ以降は必要ない記述ですかね？　意図しない動作を防ぐために使わないコードはコメントか消した方がいいでしょう。
+        //*** ====================================================================================================================
 
         //プレイヤーの最新の位置から少し前の位置を引いて方向を割り出す
         Vector3 direction = transform.position - playerPos;

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TransformCube : MonoBehaviour
 {
-    //*** これらの変数はVector3型でまとめると可読性が上がるでしょう
+    //*** ===============================================================
+    //*** [改善]これらの変数はVector3型でまとめると可読性が上がるでしょう
     //***↓
+    //*** ===============================================================
 
     public float posx1 = 0f;
     public float posy1 = 0f;
@@ -26,14 +28,16 @@ public class TransformCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-   
-
         Vector3 pos = transform.position;
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            // プレイヤーがどこかに着地しているか？
 
+            //*** ===================================================================================================
+            //*** [改善]このままではif(Ground == true)の必要はないです。 発表でSetActive()を使えばよかったというのはここですかね？
+            //***       GameObject.SetActive()を使うとまとまって良いと思います。
+            //*** ===================================================================================================
+
+            // プレイヤーがどこかに着地しているか？
             if (Ground == true)
             {
                 // 床が見えるところにあるか？

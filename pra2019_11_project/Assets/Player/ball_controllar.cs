@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ball_controllar : MonoBehaviour
 {
+    
+    //*** [改善]クラスの名前は大文字で始まることが多いです。これは一目でクラスと判別するためです。
+    //***       このルールは実際の開発などでプログラミングのセオリーとなっています。今後はクラスは大文字にする癖をつけると良いでしょう。
 
-
+    //***それ以外はまとまっていて非常に良いです。使われていないようですが…
 
     public float speed = 10;
     public float power = 1000;

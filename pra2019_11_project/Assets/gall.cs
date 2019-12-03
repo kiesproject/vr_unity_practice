@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class gall : MonoBehaviour
 {
+    //***クラスの名前は大文字で始まることが多いです。これは一目でクラスと判別するためです。
+	//***このルールは実際の開発などでプログラミングのセオリーとなっています。今後はクラスは大文字にする癖をつけると良いでしょう。
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +21,7 @@ public class gall : MonoBehaviour
 
         if (pos.z > 10)
         {
+            //***旧式の命令はあまり使わない方がいいですね
             Application.LoadLevel("Stage1");
         }
     }
