@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class movewall : MonoBehaviour
 {
-
+    //*** ==================
+    //*** 良いです。
+    //*** ==================
 
     void Update()
     {

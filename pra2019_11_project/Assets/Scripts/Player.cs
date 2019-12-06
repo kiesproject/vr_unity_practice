@@ -35,8 +35,43 @@ public class Player : MonoBehaviour
     }
 
     private void Move()
-    {　
+    {
         //プレイヤーがフィールドの範囲内にいるとき対応したボタンで対応した動きをする
+
+        // *** ===================================================================================================================
+        // *** [アドバイス]範囲外のTranslateの方向ベクトルに0をかけると移動しないのでそれを利用するともう少し短く書けるでしょう。
+        // ***             例えば以下のように書くことが出来ます。
+
+        // *** <ここから一例>
+
+        // *** () ? ～ : ～;というのは三項演算子と言います。動作はif文と変わりませんがコンパクトに書くことが出来ます。
+        // *** ([条件式]) ? [条件式が真の時の返り値] : [条件式が偽の時の返り値] ;
+
+        /*
+        float c_up      = (transform.position.z > 11.0f) ? 0 : 1;
+        float c_right   = (transform.position.x > 18.5f) ? 0 : 1;
+        float c_left    = (transform.position.x < -18.5f) ? 0 : 1;
+        float c_down    = (transform.position.z < -11.0f) ? 0 : 1;
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Translate(0.05f * speed * c_right , 0, 0);
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.Translate(-0.05f * speed * c_left, 0, 0);
+        }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.Translate(0, 0, 0.05f * speed * c_up);
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            transform.Translate(0, 0, -0.05f * speed * c_down);
+        }
+        */
+        // *** <ここまで一例>
+        // *** ===================================================================================================================
 
         if (transform.position.x < 18.5 && transform.position.x > -18.5)　
         {
@@ -87,6 +122,7 @@ public class Player : MonoBehaviour
                 transform.Translate(0, 0, -0.05f * speed);
             }
         }
+        
         
         
     }

@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     private Text score;    //表示するスコア
 
     void Start()

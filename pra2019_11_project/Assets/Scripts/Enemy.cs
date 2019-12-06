@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public Transform target;//追いかける対象
     public float speed = 0.04f;//追いかける速さ
     private Vector3 vct;//位置
@@ -14,6 +18,10 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
+        // *** =========================================================================================================
+        // *** 瞬間敵に向きが変わるのではなく、少しずつ向きが変わるようにしていることは手間がかかっていて良いでしょう。
+        // *** =========================================================================================================
+
         //targetの方に少しずつ向きが変わる
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.position - transform.position), 0.3f);
 

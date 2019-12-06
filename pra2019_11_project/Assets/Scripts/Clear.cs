@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Clear : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject juge;  //クリア判定
 
     public void OnTriggerEnter(Collider other)

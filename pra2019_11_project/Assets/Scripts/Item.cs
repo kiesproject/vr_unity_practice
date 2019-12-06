@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    //*** ==================
+    //*** 良いです。
+    //*** ==================
 
     void Update()
     {
+        //*** アニメーションを使うのも手ですね
         transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);//斜めに回転する
     }
 

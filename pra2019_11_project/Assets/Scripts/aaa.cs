@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class aaa : MonoBehaviour
 {
+    // *** [改善]クラス名は一目で想像が付くものがいいです。きっと時間が無かったんでしょうかね
+
+
     private Text timer;//表示するもの
     private float t = 10;
 
