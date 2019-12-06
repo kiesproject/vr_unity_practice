@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class StartScript : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
+
     /// <summary>
     /// タイトル画面用スクリプト
     /// </summary>

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GameContoroller : MonoBehaviour
 {
+    // *** [改善]これはどちらでもいいんですが、<summary>を書くならクラスの上がいいと思います。
+    // ***       正しく書くとマウスオーバーするとsummaryの内容を表示してくれます。
+
     /// <summary>
     /// ゲーム全体の時間やUI
     /// 敵や目的地の生成などを行う。
@@ -24,6 +27,7 @@ public class GameContoroller : MonoBehaviour
     [SerializeField] float time;
     [SerializeField] float borninterval;
     [SerializeField] float score;
+
     public GameObject Enemy;
     public GameObject Player;
     public GameObject Warning;
@@ -48,6 +52,18 @@ public class GameContoroller : MonoBehaviour
 
         //ゲームオーバー用の文字などを取得しenabledにしておく
 
+
+        //*** =========================================================================================================================================
+        //*** [アドバイス]Start()でGameObject.Find使って代入するのであれば、jumpcounttext・gameovertext・gameovertext2はpublicである必要はないですね
+        //***             inspectorが散らかるので、不要なinspector表示は控えた方がいいです。
+        //***             ちなみに、[HideInInspector]をつけるとpublic修飾子がついていてもinspectorには表示されません。
+        //*** =========================================================================================================================================
+
+        //*** =============================================================================================================================
+        //*** [改善]コンポーメントのチェックを消しているが、ゲームオブジェクトのチェックを消せば、親オブジェクトだけを操作すればよくなります。
+        //***       その場合はGameObject.SetActive(bool)を使用します。
+        //*** =============================================================================================================================
+
         //★…子オブジェクトにしたらテキスト説明が一緒に消えると思ったが消えなかったので仕方なく2個同時に操作している
         gameovertext = GameObject.Find("GameOver").GetComponent<Text>();
         gameovertext2 = GameObject.Find("GameOver2").GetComponent<Text>();
@@ -59,6 +75,10 @@ public class GameContoroller : MonoBehaviour
         //☆重要な場所1 ここで敵を生成している
         //コルーチンでEnemyを生成するメソッドをborninterval秒ごとに呼び出している
         StartCoroutine(EnemyCreate(borninterval));
+
+        //*** ============================================================================================
+        //*** 採点者はコルーチンが大好きなので、コルーチンを使っていることを大いに褒めます。素晴らしい。
+        //*** ============================================================================================
 
     }
 
@@ -84,6 +104,15 @@ public class GameContoroller : MonoBehaviour
         scoretext.text = "Score:" + score.ToString();
         //jump回数更新
         jumpcounttext.text = "jump残り:" + playerScript.jumpcount.ToString();
+
+        //*** ====================================================================================================================
+        //*** [改善] GameObject.Find()などのFind系の命令は実行時間が長いのでUpdate()内に書いてしまうと重くなる原因になります。
+        //***        プレイヤーを取得する場合、Find系の命令はStartやAwakeに書くと良いでしょう。
+        //***
+        //***        tag(destination)が存在しないかを調べるのなら、Destinationにscriptをつけて、生成されたこと・消えたことをGameControllerに通知させる方法がある。
+        //***        ちなみにゲームオブジェクトが削除されるときに処理を行うにはOnDestroy()を使う。
+        //***        他には、少し強引だがステージの上に四角のコリダーを置いて、OnTriggerEnterをつけて監視する方法もある。
+        //*** ====================================================================================================================
 
         //もしtag(destination)がないならdestinationを生成
         GameObject des = GameObject.FindWithTag("Destination");
@@ -113,6 +142,7 @@ public class GameContoroller : MonoBehaviour
         }
 
     }
+
 
     //playerから呼び出される
     public void timeadd()
@@ -181,6 +211,9 @@ public class GameContoroller : MonoBehaviour
 
     }
 
+    //*** ============================================================================================
+    //*** 採点者はコルーチンが大好きなので、コルーチンを使っていることを大いに褒めます。素晴らしい。
+    //*** ============================================================================================
 
     //コルーチン、敵の場所がある程度わかるように時間経過で出現
     private IEnumerator EnemyCreate(float waittime)
