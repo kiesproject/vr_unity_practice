@@ -220,7 +220,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256802366}
-  - component: {fileID: 256802365}
   - component: {fileID: 256802367}
   m_Layer: 0
   m_Name: MazeManager
@@ -229,23 +228,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &256802365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256802364}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a3d6ca04f4807542a550ec3deb09d24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Room: {fileID: 3183716229934528455, guid: 4e5fd4e33c1303a408c9320ec8765606, type: 3}
-  WallX: {fileID: 5762993002589885628, guid: bcdd1bbce70fb4946aa39ffff1b49ca1, type: 3}
-  WallY: {fileID: 9025078280303908566, guid: 91e8f562973baf54e856ea6e3b74d266, type: 3}
-  Pillar: {fileID: 3210460747345167450, guid: 6be3a291d86205f4c95212ec783aa4d7, type: 3}
-  OutWall: {fileID: 3210460747345167450, guid: 6be3a291d86205f4c95212ec783aa4d7, type: 3}
 --- !u!4 &256802366
 Transform:
   m_ObjectHideFlags: 0
@@ -272,9 +254,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201b92cc86780714e98c484edf96d9b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maze_w: 10
+  maze_h: 10
   Room: {fileID: 3183716229934528455, guid: 4e5fd4e33c1303a408c9320ec8765606, type: 3}
-  WallX: {fileID: 5762993002589885628, guid: bcdd1bbce70fb4946aa39ffff1b49ca1, type: 3}
-  WallY: {fileID: 9025078280303908566, guid: 91e8f562973baf54e856ea6e3b74d266, type: 3}
+  WallW: {fileID: 5762993002589885628, guid: bcdd1bbce70fb4946aa39ffff1b49ca1, type: 3}
+  WallH: {fileID: 9025078280303908566, guid: 91e8f562973baf54e856ea6e3b74d266, type: 3}
   Joint: {fileID: 3210460747345167450, guid: 6be3a291d86205f4c95212ec783aa4d7, type: 3}
 --- !u!1 &534669902
 GameObject:
@@ -462,6 +446,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1622907825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02247e244166e4c488e1e94d11ec3523, type: 3}
+  m_Script: {fileID: 11500000, guid: 004ad0f3b70b65849aaf5d8687ab179c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
