@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class player2 : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     // Use this for initialization
     void Start()
     {

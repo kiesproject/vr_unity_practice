@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class jamp : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject Player;
     private Rigidbody PlayerRigid;//PlayerオブジェクトのRigidbobyを保管する
     public float Upspeed;　　　　//ジャンプのスピード

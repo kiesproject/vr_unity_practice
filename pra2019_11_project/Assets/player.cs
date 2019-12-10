@@ -17,6 +17,9 @@ public class player : MonoBehaviour
         float x = Input.GetAxis("Horizontal") * speed;
         float z = Input.GetAxis("Vertical") * speed;
         rb.AddForce(x, 0, z);
+
+        
+
     }
 }
 

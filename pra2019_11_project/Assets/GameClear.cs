@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameClear : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))

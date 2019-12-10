@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameOverFloor : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     // ★追加
     public void OnCollisionEnter(Collision other)
     {
