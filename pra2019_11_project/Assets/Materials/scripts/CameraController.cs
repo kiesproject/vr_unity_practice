@@ -3,6 +3,10 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject player; // 玉のオブジェクト
 
     private Vector3 offset; // 玉からカメラまでの距離

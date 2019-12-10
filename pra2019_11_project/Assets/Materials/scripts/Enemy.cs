@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour{
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject target;
     UnityEngine.AI.NavMeshAgent agent;
     // Start is called before the first frame update
