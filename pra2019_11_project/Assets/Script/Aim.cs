@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Aim : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public Transform MY;
     public Transform MX;
 

@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject player_Poss;
     public GameObject enemy_Poss;
 

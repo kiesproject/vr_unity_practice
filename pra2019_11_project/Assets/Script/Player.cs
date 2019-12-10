@@ -5,7 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject GameOver_A;
     public Rigidbody rb;
     public float move = 1.0f; //インスペクターで速度の変更可能
