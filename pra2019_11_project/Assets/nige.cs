@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 // プレイヤー
 public class nige : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
 
     void Update()
     {
