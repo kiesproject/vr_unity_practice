@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Controller : MonoBehaviour
 {
+    //*** ==================
+    //*** 良いです。
+    //*** ==================
 
     void Start()
     {
