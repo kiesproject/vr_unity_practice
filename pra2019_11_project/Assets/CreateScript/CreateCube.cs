@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CreateCube : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
 
     public GameObject originalObject;
     public float timeOut = 3.0f;

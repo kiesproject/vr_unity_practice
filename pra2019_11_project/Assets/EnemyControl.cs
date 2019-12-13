@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EnemyControl: MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public Transform target;
     public float speed;
     private Vector3 vec;

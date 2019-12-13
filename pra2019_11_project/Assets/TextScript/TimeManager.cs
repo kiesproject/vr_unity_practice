@@ -20,6 +20,10 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
+        //*** =====================================================
+        //*** timecountとif (timecount <= 0)は必要なさそうだけど？
+        //*** =====================================================
+
         timecount -= Time.deltaTime;
         if (timecount <= 0)
         {

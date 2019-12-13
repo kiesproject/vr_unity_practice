@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class FinalManager: MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject final_object = null;
     public float timecount_final;
     //playerに付いているHitplayerというscriptを取得

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MoveControl : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public float speed = 3f;
     float moveX = 0f;
     float moveZ = 0f;

@@ -16,15 +16,33 @@ public class HitCube : MonoBehaviour
     //cubeに当たったobjectのtagがplayerの場合、それを非表示にする
     void OnCollisionEnter(Collision collision)
     {
+        //*** ============================================================================================================
+        //*** [アドバイス] ! を付けるとtrueとfalseが逆になります。
+        //*** つまり、!collision.gameObject.CompareTag("plane") とすると、planeタグが検出されないときにtrueになります。
+        //*** ============================================================================================================
+
+
         if (collision.gameObject.CompareTag("plane") == false)
         {
             if (collision.gameObject.CompareTag("enemy"))
             {
                 Destroy(collision.gameObject);
             }
-            else if (collision.gameObject.CompareTag("player"))
+
+            //*** =============================================
+            //*** [改善]実際に登録されているタグはPlayerです。
+            //*** =============================================
+
+            //else if (collision.gameObject.CompareTag("player"))
+            else if (collision.gameObject.CompareTag("Player"))
             {
                 collision.gameObject.SetActive(false);
+
+
+                //*** ===================================================================================================
+                //*** [改善]ゲームオーバーになるとanotherSctiptがmissingになってしまうためその対策をする必要があります。
+                //*** ===================================================================================================
+
                 anotherScript.fin = true;
             }
         }
