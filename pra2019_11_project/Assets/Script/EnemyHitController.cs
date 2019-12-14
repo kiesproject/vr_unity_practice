@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class EnemyHitController : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     // オブジェクトと接触した時に呼ばれるコールバック
     void OnCollisionEnter(Collision hit)
     {

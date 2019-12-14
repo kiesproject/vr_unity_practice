@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Clear : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject Text;
 
     // Use this for initialization

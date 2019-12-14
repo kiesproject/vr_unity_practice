@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class CountDown : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public float MAX_TIME = 5;
     float timeCount;
 
@@ -14,6 +18,10 @@ public class CountDown : MonoBehaviour
         timeCount = MAX_TIME;
         GetComponent<Text>().text = ((int)timeCount).ToString();
 
+        //*** ============================================================================================
+        //*** [アドバイス]Text型の変数を宣言して格納しておくといちいちGetComponentしなくても良くなります。
+        //***             GetComponentはそこそこ重い命令なのでUpdate内に書くのは避けましょう。
+        //*** ============================================================================================
     }
 
     // Update is called once per frame

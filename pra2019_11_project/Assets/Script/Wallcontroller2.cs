@@ -12,6 +12,10 @@ public class Wallcontroller2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //*** ===========================================
+        //*** [アドバイス]sin波を使うという手もあります。
+        //*** ===========================================
+
         //フレーム毎speedの値分だけx軸方向に移動する
         this.gameObject.transform.Translate(speed, 0, 0);
 
