@@ -7,6 +7,12 @@ public class PlayerController : MonoBehaviour
     float inputHorizontal;
     float inputVertical;
     Rigidbody rb;
+
+    //*** =============================================================================================================================
+    //*** [アドバイス]MonoBehaviourの中にすでにCamera cameraが宣言されています。
+    //***             そっちのcameraを使わない限り問題無いとは思いますが、混乱を避けるためにあんまり被る名前は使わない方がいいでしょう。
+    //*** =============================================================================================================================
+
     public Camera camera;
 
     float moveSpeed = 3f;
@@ -22,10 +28,19 @@ public class PlayerController : MonoBehaviour
         inputHorizontal = Input.GetAxisRaw("Horizontal")*speed;
         inputVertical = Input.GetAxisRaw("Vertical")*speed;
         rb.AddForce(inputHorizontal,0,inputVertical);
+
+        //*** =================================
+        //*** [改善]AddForceは必要ないと思います。
+        //*** =================================
+
     }
 
     void FixedUpdate()
     {
+        //*** ====================================
+        //*** カメラを配慮した移動は素晴らしいです
+        //*** ====================================
+
         // カメラの方向から、X-Z平面の単位ベクトルを取得
         Vector3 cameraForward = Vector3.Scale(camera.transform.forward, new Vector3(1, 0, 1)).normalized;
 

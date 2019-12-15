@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     Vector3 doorPos;
     Transform wallTransform;
     [SerializeField]string colisionObj;

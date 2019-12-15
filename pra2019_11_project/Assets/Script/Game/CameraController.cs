@@ -9,6 +9,8 @@ public class CameraController : MonoBehaviour
     public GameObject playerObj;
     private Vector3 playerPos;
 
+    private float dumpRotateZ;
+
     void Start()
     {
         playerObj = GameObject.Find("Player");
@@ -27,6 +29,7 @@ public class CameraController : MonoBehaviour
         float mouseInputY = Input.GetAxis("Mouse Y");
         // playerの位置のY軸を中心に、回転（公転）する
         transform.RotateAround(playerPos, Vector3.up, mouseInputX * Time.deltaTime * 200f);
+
         // カメラの垂直移動（※角度制限なし、必要が無ければコメントアウト）
         transform.RotateAround(playerPos, transform.right, mouseInputY * Time.deltaTime * 200f);
 

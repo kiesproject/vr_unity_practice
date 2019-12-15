@@ -14,9 +14,19 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        //*** ======================================================================================================================================
+        //*** [改善]enemyTransformとplayerTransformはTransform型で宣言されているのでここで改めてGetComponent<Transform>()する必要はありません。
+        //*** ======================================================================================================================================
+
         enemyTransform = this.gameObject.GetComponent<Transform>();
         playerTransform = player.gameObject.GetComponent<Transform>();
         playerCol = false;
+
+        //*** ===================================================================================================
+        //*** [アドバイス]this.gameObjectにRigidbodyがアタッチされているので、rbをprivateにした方がいいでしょう。
+        //***             カプセル化の観点からpublicにする必要の無いものはprivateにする方がいいでしょう。
+        //*** ===================================================================================================
+
         rb = this.gameObject.GetComponent<Rigidbody>();
     }
 
@@ -25,10 +35,15 @@ public class Enemy : MonoBehaviour
         enemyPos = enemyTransform.position;                             //Enemyの座標取得
         playerPos = playerTransform.position;                           //Playerの座標取得
 
-        if(playerCol == true)
+        //*** ============================================================================
+        //*** [改善]playerColはbool型なので(playerCol == true)はplayerColのみで書けます。
+        //*** ============================================================================
+
+        if (playerCol == true)
         {
             SceneManager.LoadScene("GameOverScene");
-        }
+        }        
+
         if (Vector3.Distance(playerPos, enemyPos) <= length)             //Vector3.Distance(a,b)でa,b間の距離
         {
             this.transform.LookAt(playerPos);
@@ -57,6 +72,5 @@ public class Enemy : MonoBehaviour
             rb.velocity = transform.forward * speed;
         }
     }
-    
 }
 
