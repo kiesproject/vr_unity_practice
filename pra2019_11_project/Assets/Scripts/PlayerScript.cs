@@ -2,6 +2,10 @@
 
 public class PlayerScript : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public float speed = 20; // 動く速さ
 
     private Rigidbody rb; // Rididbody

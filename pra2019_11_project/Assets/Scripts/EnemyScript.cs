@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class EnemyScript: MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
 
     public NavMeshAgent Enemy;
     public GameObject Player;
