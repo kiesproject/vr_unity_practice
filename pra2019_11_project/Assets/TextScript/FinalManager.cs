@@ -23,6 +23,10 @@ public class FinalManager: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //*** =============================================================================================
+        //*** [アドバイス]Update内でGetComponentを使うのはちょっと重くなるのでStart()に書いた方がいいです。
+        //*** =============================================================================================
+
         timecount_final -= Time.deltaTime;
         //playerが非表示になったらYOU LOSEを表示
         if (anotherScript.fin)
@@ -30,6 +34,7 @@ public class FinalManager: MonoBehaviour
             Text final_text = final_object.GetComponent<Text>();
             final_text.text = "YOU LOSE";
         }
+
         //20秒耐えきったらYOU WINを表示
         else if (timecount_final <= 0)
         {
