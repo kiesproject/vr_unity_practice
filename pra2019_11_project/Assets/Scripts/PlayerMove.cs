@@ -5,12 +5,15 @@ using UnityEngine.AI;
 
 public class PlayerMove : MonoBehaviour
 {
-
     public NavMeshAgent player;
     public GameObject target;
 
     void Start()
     {
+        //*** =============================================================================
+        //*** [改善]playerのアクセス修飾子はprivateにしておくとinspectorがスッキリします。
+        //*** =============================================================================
+
         player = gameObject.GetComponent<NavMeshAgent>();
     }
 
