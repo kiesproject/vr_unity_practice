@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CreateEnemy : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject Enemy;
     public float time = 30;
     // Start is called before the first frame update

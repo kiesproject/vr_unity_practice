@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public Text clear;
     public Text gameover;
     // Start is called before the first frame update

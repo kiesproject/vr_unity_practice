@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class EnemyContollor : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public Transform target;
     public float speed;
     private Vector3 vec;

@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class TimerScript : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameScript gameScript;
     //　トータル制限時間
     private float totalTime;

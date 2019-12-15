@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerCntoroller : MonoBehaviour
 {
+    //*** =====================================================
+    //*** 非常に良いです。もう少しコメントを書いて欲しいです。
+    //*** =====================================================
+
     // Start is called before the first frame update
     public GameScript gameScript;
     public float speed = 20;
