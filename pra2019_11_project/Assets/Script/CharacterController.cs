@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+
+    //*** =======
+    //*** ↓頭文字大文字↓
+    //*** =======
+
     protected struct stetas
     {
         public int Level;

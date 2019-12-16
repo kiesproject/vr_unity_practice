@@ -65,9 +65,15 @@ public class CoursoruCheck : MonoBehaviour
             //Debug.Log("GetIDは" + hit_info.transform.GetComponent<MeiroObjectID>().GetID());
             if (vs[i] > -1)
             {
-                if (vs[i] == hit_info.transform.GetComponent<MeiroObjectID>().GetID())
+                //*** ===============================================================================
+                //*** [改善] hit_infoに中身が入っているのか確認してないんじゃないですかぁ？？？？？
+                //*** ===============================================================================
+                if (hit_info.transform.GetComponent<MeiroObjectID>()) //*** 講評するため追加しました。
                 {
-                    setNeigborTrue = true;
+                    if (vs[i] == hit_info.transform.GetComponent<MeiroObjectID>().GetID())
+                    {
+                        setNeigborTrue = true;
+                    }
                 }
             }
         }

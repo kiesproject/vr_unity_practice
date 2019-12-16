@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //*** ===============================
+    //*** [改善]コメントを書いてください
+    //*** ===============================
+
     [SerializeField] private int floor = 0;
     [SerializeField] private int squareSize = 0;
     [SerializeField] private int meiroNeighborhood = 0;
@@ -42,6 +46,10 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    //*** ===================================
+    //*** カプセル化を意識していていいだろう
+    //*** ===================================
 
     public int GetFloor()
     {
