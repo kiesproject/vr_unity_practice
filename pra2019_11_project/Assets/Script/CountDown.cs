@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
 public class CountDown : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
+    //*** ===================================
+    //*** これはstaticじゃなくてもいいです。
+    //*** ===================================
     public static float CountDownTime;  //カウントダウンタイム
     public Text TextCountDown;  //表示用テキストUI
     public GameObject deadLabelObject;

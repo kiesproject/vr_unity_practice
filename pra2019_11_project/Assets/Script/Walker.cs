@@ -60,6 +60,10 @@ public class Walker : MonoBehaviour
         //ランダム要素で選ぶ
         int random = Random.Range(1, verCount);
 
+        //*** ===============================================================
+        //*** ↑要素数をランダムで選ぶならRandom.Range(0, verCount);ですね。
+        //*** ===============================================================
+
         //このオブジェクトを消した壁のランダムで選んだ位置に移動
         transform.position = new Vector3(horizontal[random], 0, vertical[random]);
 

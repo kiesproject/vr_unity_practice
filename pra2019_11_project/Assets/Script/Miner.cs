@@ -53,6 +53,10 @@ public class Miner : MonoBehaviour
         float random4 = Random.Range(0.1f, 3f);
         yield return new WaitForSeconds(random4);
 
+        //*** ============================================================================
+        //*** [改善]上はfor文でまとめれます。ちなみにここはどうして待たせてるんですかね？演出？
+        //*** ============================================================================
+
         Destroy(gameObject);
     }
 

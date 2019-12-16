@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     //Listで消した壁の縦軸と横軸の数値を入れる
     public static List<int> vertical = new List<int>();
     public static List<int> horizontal = new List<int>();
