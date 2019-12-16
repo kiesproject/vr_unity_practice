@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     //public Transform target;
     //public Vector3[] targetPosition;
     //public Vector3 nowTargetPosition;
