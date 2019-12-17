@@ -155,7 +155,7 @@ MonoBehaviour:
   Player: {fileID: 1940664589}
   MapWidth: 50
   MapHeight: 30
-  WallHeght: 2
+  WallHeight: 2
   MinRooms: 1
   MaxRooms: 13
 --- !u!4 &364387517
