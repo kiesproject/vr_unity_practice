@@ -143,8 +143,7 @@ public class CharacterController : MonoBehaviour
             Vector3 nextV3 = new Vector3(2f, 0f, 0f) + nowPosition;
             transform.rotation = Quaternion.Slerp(transform.rotation, nextQuaternion, setS);
             transform.position = Vector3.Lerp(transform.position, nextV3, setS);
-            Vector3 rV3 = transform.rotation.eulerAngles;
-            Vector3 pV3 = transform.position;
+            
             /*
             pV3.x = Mathf.Round(pV3.x);
             pV3.y = Mathf.Round(pV3.y);
@@ -153,8 +152,19 @@ public class CharacterController : MonoBehaviour
             */
             Debug.Log(Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)));
             Debug.Log(Mathf.Abs(Vector3.Distance(transform.position, nextV3)));
-            if (Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)) == 0 && (Mathf.Abs(Vector3.Distance(transform.position, nextV3))<0.005f))
+            if (Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)) == 0 && (Mathf.Abs(Vector3.Distance(transform.position, nextV3))<0.01f))
             {
+                Quaternion qV3 = transform.rotation;
+                Vector3 rV3 = qV3.eulerAngles;
+                rV3.x = Mathf.Round(rV3.x);
+                rV3.y = Mathf.Round(rV3.y);
+                rV3.z = Mathf.Round(rV3.z);
+                Vector3 pV3 = transform.position;
+                pV3.x = Mathf.Round(pV3.x);
+                pV3.y = Mathf.Round(pV3.y);
+                pV3.z = Mathf.Round(pV3.z);
+                transform.position = pV3;
+                transform.rotation = Quaternion.Euler(rV3);
                 if (map[finalNextIndex] == 2)
                 {
                     GameManager.instance.GetMeiro().GeneratPublic();
@@ -175,7 +185,7 @@ public class CharacterController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, nextQuaternion, setS);
             transform.position = Vector3.Lerp(transform.position, nextV3, setS);
 
-            Vector3 pV3 = transform.position;
+           
             /*
             transform.position = pV3;
             pV3.x = Mathf.Round(pV3.x);
@@ -184,8 +194,19 @@ public class CharacterController : MonoBehaviour
             */
             Debug.Log(Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)));
             Debug.Log( Mathf.Abs(Vector3.Distance(transform.position, nextV3)));
-            if (Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)) == 0 && (Mathf.Abs(Vector3.Distance(transform.position, nextV3)) <0.005f))
+            if (Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)) == 0 && (Mathf.Abs(Vector3.Distance(transform.position, nextV3)) <0.01f))
             {
+                Quaternion qV3 = transform.rotation;
+                Vector3 rV3 = qV3.eulerAngles;
+                rV3.x = Mathf.Round(rV3.x);
+                rV3.y = Mathf.Round(rV3.y);
+                rV3.z = Mathf.Round(rV3.z);
+                Vector3 pV3 = transform.position;
+                pV3.x = Mathf.Round(pV3.x);
+                pV3.y = Mathf.Round(pV3.y);
+                pV3.z = Mathf.Round(pV3.z);
+                transform.position = pV3;
+                transform.rotation = Quaternion.Euler(rV3);
                 if (map[finalNextIndex] == 2)
                 {
                     GameManager.instance.GetMeiro().GeneratPublic();
@@ -206,7 +227,7 @@ public class CharacterController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, nextQuaternion, setS);
             transform.position = Vector3.Lerp(transform.position, nextV3, setS);
 
-            Vector3 pV3 = transform.position;
+            
             /*
             pV3.x = Mathf.Round(pV3.x);
             pV3.y = Mathf.Round(pV3.y);
@@ -215,8 +236,19 @@ public class CharacterController : MonoBehaviour
         */
             Debug.Log(Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)));
             Debug.Log(Mathf.Abs(Vector3.Distance(transform.position, nextV3)));
-            if (Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)) == 0 && (Mathf.Abs(Vector3.Distance(transform.position, nextV3)) <0.005f))
+            if (Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)) == 0 && (Mathf.Abs(Vector3.Distance(transform.position, nextV3)) <0.01f))
             {
+                Quaternion qV3 = transform.rotation;
+                Vector3 rV3 = qV3.eulerAngles;
+                rV3.x = Mathf.Round(rV3.x);
+                rV3.y = Mathf.Round(rV3.y);
+                rV3.z = Mathf.Round(rV3.z);
+                Vector3 pV3 = transform.position;
+                pV3.x = Mathf.Round(pV3.x);
+                pV3.y = Mathf.Round(pV3.y);
+                pV3.z = Mathf.Round(pV3.z);
+                transform.position = pV3;
+                transform.rotation = Quaternion.Euler(rV3);
                 if (map[finalNextIndex] == 2)
                 {
                     GameManager.instance.GetMeiro().GeneratPublic();
@@ -239,17 +271,26 @@ public class CharacterController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, nextQuaternion, setS);
             transform.position = Vector3.Lerp(transform.position, nextV3, setS);
 
-            Vector3 pV3 = transform.position;
+            
+            
             /*
-            pV3.x = Mathf.Round(pV3.x);
-            pV3.y = Mathf.Round(pV3.y);
-            pV3.z = Mathf.Round(pV3.z);
-            transform.position = pV3;
+            
             */
             Debug.Log(Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)));
             Debug.Log(Mathf.Abs(Vector3.Distance(transform.position, nextV3)));
-            if (Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)) == 0 && (Mathf.Abs(Vector3.Distance(transform.position, nextV3))<0.005f))
+            if (Mathf.Floor(Quaternion.Dot(transform.rotation, nextQuaternion)) == 0 && (Mathf.Abs(Vector3.Distance(transform.position, nextV3))<0.01f))
             {
+                Quaternion qV3 = transform.rotation;
+                Vector3 rV3 = qV3.eulerAngles;
+                rV3.x = Mathf.Round(rV3.x);
+                rV3.y = Mathf.Round(rV3.y);
+                rV3.z = Mathf.Round(rV3.z);
+                Vector3 pV3 = transform.position;
+                pV3.x = Mathf.Round(pV3.x);
+                pV3.y = Mathf.Round(pV3.y);
+                pV3.z = Mathf.Round(pV3.z);
+                transform.position = pV3;
+                transform.rotation = Quaternion.Euler(rV3);
                 if (map[finalNextIndex] == 2)
                 {
                     GameManager.instance.GetMeiro().GeneratPublic();
