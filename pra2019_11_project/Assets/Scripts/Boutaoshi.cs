@@ -5,6 +5,10 @@ using System;
 //迷路を作る
 public class Boutaoshi : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public GameObject itemprefab;
     public GameObject wallPrefab;
     public GameObject floorPrefab;

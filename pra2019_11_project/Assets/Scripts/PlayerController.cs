@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour
             characterController.Move(this.gameObject.transform.forward * Time.deltaTime * speed );
         }
         */
+
+        //*** ===============================================================================================-
+        //*** [アドバイス]単純ですが前に進む時の処理を反対にすれば出来ます。ベクトルを逆向きにすればいいです。
+        //*** ===============================================================================================-
+
     }
     private void OnTriggerEnter(Collider col)
     {

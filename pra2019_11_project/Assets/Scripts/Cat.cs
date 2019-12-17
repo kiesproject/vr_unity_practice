@@ -5,6 +5,10 @@ using UnityEngine;
 //ゴールにいる猫
 public class Cat : MonoBehaviour
 {
+    //*** ==================
+    //*** 非常に良いです。
+    //*** ==================
+
     public AudioClip myao;
     AudioSource audioSource;
 
